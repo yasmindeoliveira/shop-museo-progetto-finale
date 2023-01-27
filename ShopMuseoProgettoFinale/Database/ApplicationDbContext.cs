@@ -29,6 +29,8 @@ namespace ShopMuseoProgettoFinale.Database
                 builder.Property(x => x.Date)
                        .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
