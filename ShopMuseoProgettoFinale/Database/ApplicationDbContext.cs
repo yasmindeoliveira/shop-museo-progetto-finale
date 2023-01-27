@@ -20,16 +20,21 @@ namespace ShopMuseoProgettoFinale.Database
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            // Conversione per una data da DateTime a DateOnly, perché il database funziona soltanto con DateTime
+            // quindi bisogna dirgli come convertire questi dati nel database
             modelBuilder.Entity<Purchase>(builder => {
-                builder.Property(x => x.Date)
-                       .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+                 builder.Property(x => x.Date)
+                        .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
 
+            // Stessa cosa qui sotto, però per i rifornimenti
             modelBuilder.Entity<Resupply>(builder => {
-                builder.Property(x => x.Date)
-                       .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+                 builder.Property(x => x.Date)
+                        .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
 
+            // Qui chiamiamo il metodo di base, perché quando viene fatto in override
+            // non viene eseguito automaticamente e quindi le migrations per il login falliscono
             base.OnModelCreating(modelBuilder);
         }
     }
