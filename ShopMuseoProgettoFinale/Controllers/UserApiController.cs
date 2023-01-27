@@ -56,16 +56,16 @@ namespace ShopMuseoProgettoFinale.Controllers
                 }
                 else
                 {
-                    ProductPurchaseView modelPurchase = new ProductPurchaseView();
-                    modelPurchase.Product = productFound;
-                    modelPurchase.Quantity = 0;
+                    Purchase modelPurchase = new Purchase();
+                    modelPurchase.ProductId = id;
                     return Ok(modelPurchase);
                 }
             }
         }
+
         [Route("Purchase")]
         [HttpPost]
-        public IActionResult PurchaseCreate(ProductPurchaseView formData)
+        public IActionResult PurchaseCreate([FromBody] Purchase formData)
         {
             //qua arriverà quanità che vuole acquistare e nome, 
 
@@ -73,29 +73,22 @@ namespace ShopMuseoProgettoFinale.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return Ok(formData);
+                    return UnprocessableEntity(ModelState);
                 }
                 else
                 {
-                    Purchase newPurchase = new Purchase();
-                    newPurchase.Date = DateOnly.FromDateTime(DateTime.Now);
-                    newPurchase.Quantity = formData.Quantity;
-                    newPurchase.ProductPurchaseView = formData.Product;
-                    db.Purchases.Add(newPurchase);
+                   formData.Date = DateOnly.FromDateTime(DateTime.Now);
+                   db.Purchases.Add(formData);
 
                     //ADESSO dimnuire la quantità nel magazzino del prodotto
 
-                    int PurchasedProductId = newPurchase.ProductPurchaseView.Id;
-                    Stock aggiornaStock = db.Stocks.Find(PurchasedProductId);
+                 
+                    Stock stockDaAggiornare = db.Stocks.Find(formData.ProductId);
 
-                    aggiornaStock.Quantity = aggiornaStock.Quantity - formData.Quantity;
-
-
+                    stockDaAggiornare.Quantity = stockDaAggiornare.Quantity - formData.Quantity;
 
                     db.SaveChanges();
-
-
-                    return RedirectToAction("products");
+                    return Ok();
                 }
             }
 
