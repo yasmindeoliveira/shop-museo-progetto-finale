@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShopMuseoProgettoFinale.Models;
 using ShopMuseoProgettoFinale.UtilClasses;
 
 namespace ShopMuseoProgettoFinale.Database
 {
-    public class ApplicationDbContext : DbContext {
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser> {
+
         const string ConnectionString = "Data Source=localhost;"
                                         + "Database=MuseumShop;"
                                         + "Integrated Security=True;"
