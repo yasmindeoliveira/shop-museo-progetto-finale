@@ -1,10 +1,14 @@
-﻿namespace ShopMuseoProgettoFinale.Models {
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ShopMuseoProgettoFinale.Models {
     public class Resupply {
         public int Id { get; set; }
 
         public DateOnly Date { get; set; }
 
-        public Product PurchasedProduct { get; set; }
+        public int ProductId { get; set; }
+        [ForeignKey(nameof(ProductId))]
+        public Product Product { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "La quantità di rifornimento non può essere negativa o zero.")]
         public int Quantity { get; set; }
