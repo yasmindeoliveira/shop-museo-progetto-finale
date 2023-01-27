@@ -1,11 +1,14 @@
-﻿namespace ShopMuseoProgettoFinale.Models {
+﻿namespace ShopMuseoProgettoFinale.UtilClasses
+{
     /// <summary>
     /// Un'attributo di validazione per EF Core che si assicura che una proprietà di stringhe finisca con dei suffissi predefiniti.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class EndsWithAttribute : ValidationAttribute {
+    sealed public class EndsWithAttribute : ValidationAttribute
+    {
         public IEnumerable<string> ValidEnds { get; init; }
-        public EndsWithAttribute(IEnumerable<string> validEnds) {
+        public EndsWithAttribute(IEnumerable<string> validEnds)
+        {
             if (!validEnds.Any()) // Empty
                 throw new ArgumentNullException(nameof(validEnds), "L'attributo non può avere zero suffissi.");
 
@@ -17,10 +20,12 @@
 
         public EndsWithAttribute(params string[] validEnds) : this(validEnds as IEnumerable<string>) { }
 
-        protected override ValidationResult IsValid(object? value, ValidationContext validationContext) {
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+        {
             if (value is not string castedValue) { return new ValidationResult("Il valore inserito non è una stringa."); }
 
-            foreach (string validEnd in ValidEnds) {
+            foreach (string validEnd in ValidEnds)
+            {
                 if (castedValue.EndsWith(validEnd)) { return ValidationResult.Success; }
             }
 

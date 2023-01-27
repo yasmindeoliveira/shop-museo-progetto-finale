@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopMuseoProgettoFinale.Models;
+using ShopMuseoProgettoFinale.UtilClasses;
 
-namespace ShopMuseoProgettoFinale.Database {
+namespace ShopMuseoProgettoFinale.Database
+{
     public class ApplicationDbContext : DbContext {
         const string ConnectionString = "Data Source=localhost;"
                                         + "Database=MuseumShop;"
@@ -15,6 +17,18 @@ namespace ShopMuseoProgettoFinale.Database {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlServer(ConnectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<Purchase>(builder => {
+                builder.Property(x => x.Date)
+                       .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
+
+            modelBuilder.Entity<Resupply>(builder => {
+                builder.Property(x => x.Date)
+                       .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
         }
     }
 }

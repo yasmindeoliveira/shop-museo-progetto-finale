@@ -1,4 +1,6 @@
-﻿namespace ShopMuseoProgettoFinale.Models {
+﻿using ShopMuseoProgettoFinale.UtilClasses;
+
+namespace ShopMuseoProgettoFinale.Models {
     public class Product {
         [Key]
         public int Id { get; set; }
