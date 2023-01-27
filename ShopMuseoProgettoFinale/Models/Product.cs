@@ -1,25 +1,16 @@
 ﻿namespace ShopMuseoProgettoFinale.Models {
     public class Product {
+        [Key]
         public int Id { get; set; }
+        [MaxLength(100, ErrorMessage = "Il nome del prodotto non può superare una lunghezza di 100 caratteri.")]
         public string Name { get; set; }
+        [MaxLength(1024, ErrorMessage = "La descrizione del prodotto non può superare una lunghezza di 1024 caratteri.")]
         public string Description { get; set; }
+        [Url(ErrorMessage = "Il link all'immagine deve essere un URL formattato correttamente.")]
+        [MaxLength(256, ErrorMessage = "Il link all'immagine non può essere più lungo di 256 caratteri.")]
+        [EndsWith(".png", ".jpg", ".webp", ErrorMessage = "Il link deve finire con l'estensione di un'immagine.")]
         public string PictureUrl { get; set; }
-        public double Price { get; set; }
-    }
-
-    public class Purchase {
-        public int Id { get; set; }
-        public DateOnly Date { get; set; }
-        public Product PurchasedProduct { get; set; }
-        public int Quantity { get; set; }
-    }
-
-    public class Resupply {
-        public int Id { get; set; }
-        public DateOnly Date { get; set; }
-        public Product PurchasedProduct { get; set; }
-        public int Quantity { get; set; }
-        public string SupplierName { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Il prezzo non può essere meno di zero.")]
         public double Price { get; set; }
     }
 }
