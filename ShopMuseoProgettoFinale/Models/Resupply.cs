@@ -8,7 +8,7 @@ namespace ShopMuseoProgettoFinale.Models {
 
         public int ProductId { get; set; }
         [ForeignKey(nameof(ProductId))]
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "La quantità di rifornimento non può essere negativa o zero.")]
         public int Quantity { get; set; }
