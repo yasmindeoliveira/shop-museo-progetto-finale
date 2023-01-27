@@ -132,7 +132,7 @@ namespace ShopMuseoProgettoFinale.Controllers
                 }
                 else
                 {
-                    PurchaseProductView modelPurchase = new PurchaseProductView();
+                    ProductPurchaseView modelPurchase = new ProductPurchaseView();
                     modelPurchase.Product = productFound;
                     modelPurchase.Quantity = 0;
                     return View("PurchaseCreate", modelPurchase);
@@ -142,7 +142,7 @@ namespace ShopMuseoProgettoFinale.Controllers
         }
 
         [HttpPost]
-        public IActionResult PurchaseCreate(PurchaseProductView formData)
+        public IActionResult PurchaseCreate(ProductPurchaseView formData)
         {
             //qua arriverà quanità che vuole acquistare e nome, 
 
@@ -198,36 +198,31 @@ namespace ShopMuseoProgettoFinale.Controllers
             }
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult ResupplyCreate(ProductResupplyView formData)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        using (ApplicationDbContext db = new ApplicationDbContext())
-        //        {
-        //            List<Product> listaProdotti = db.Products.ToList();
-        //            formData.ProductList= listaProdotti;
-        //            return View("ResupplyCreate", formData);
-        //        }
-        //    }else
-        //    {
-        //        using(ApplicationDbContext db = new ApplicationDbContext())
-        //        {
-        //            Resupply newResupply = new Resupply();
-        //            //qua non sono sicura perchè in db non capisco come è fatta la relaizone
-        //            newResupply.Product = formData.Resupply.Product;
-        //           //--------------------------------------
-        //            newResupply.Quantity = formData.Resupply.Quantity;
-        //            newResupply.SupplierName = formData.Resupply.SupplierName;
-        //            newResupply.Price = formData.Resupply.Price;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ResupplyCreate(ProductResupplyView formData)
+        {
+            if (!ModelState.IsValid)
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
+                    List<Product> listaProdotti = db.Products.ToList();
+                    formData.ProductList = listaProdotti;
+                    return View("ResupplyCreate", formData);
+                }
+            }
+            else
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    db.Resupplies.Add(formData.Resupply);
+                    db.SaveChanges();
+                    return RedirectToAction("ViewResupplies");
+                }
 
-        //            db.SaveChanges();
-        //            return RedirectToAction("ViewResupplies");
-        //        }
-
-        //    }
-        //}
+            }
+        }
 
 
 
