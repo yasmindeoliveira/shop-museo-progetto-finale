@@ -4,7 +4,7 @@ using ShopMuseoProgettoFinale.Models;
 namespace ShopMuseoProgettoFinale.Database {
     public class ApplicationDbContext : DbContext {
         const string ConnectionString = "Data Source=localhost;"
-                                        + "Database=PizzaShop;"
+                                        + "Database=MuseumShop;"
                                         + "Integrated Security=True;"
                                         + "TrustServerCertificate=True";
 
