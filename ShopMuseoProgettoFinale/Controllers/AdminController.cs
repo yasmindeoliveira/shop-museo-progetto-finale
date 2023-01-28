@@ -132,17 +132,16 @@ namespace ShopMuseoProgettoFinale.Controllers
                 }
                 else
                 {
-                    ProductPurchaseView modelPurchase = new ProductPurchaseView();
-                    modelPurchase.Product = productFound;
-                    modelPurchase.Quantity = 0;
-                    return View("PurchaseCreate", modelPurchase);
+                    Purchase newPurchase = new Purchase();
+                    newPurchase.ProductId = id;
+                    return View("PurchaseCreate", newPurchase);
                 }
             }
 
         }
 
         [HttpPost]
-        public IActionResult PurchaseCreate(ProductPurchaseView formData)
+        public IActionResult PurchaseCreate(Purchase formData)
         {
             //qua arriverà quanità che vuole acquistare e nome, 
 
@@ -154,17 +153,15 @@ namespace ShopMuseoProgettoFinale.Controllers
                 }
                 else
                 {
-                    Purchase newPurchase = new Purchase();
-                    newPurchase.Date = DateOnly.FromDateTime(DateTime.Now);
-                    newPurchase.Quantity = formData.Quantity;
-                    newPurchase.Product = formData.Product;
-                    db.Purchases.Add(newPurchase);
+                    
+                    formData.Date = DateOnly.FromDateTime(DateTime.Now);
+                    db.Purchases.Add(formData);
                     db.SaveChanges();
 
                     //ADESSO dimnuire la quantità nel magazzino del prodotto
 
-                    int PurchasedProductId = newPurchase.Product.Id;
-                    Stock aggiornaStock = db.Stocks.Find(PurchasedProductId);
+                    int PurchasedProductId = formData.ProductId;
+                    Stock aggiornaStock = db.Stocks.Where(p=>p.ProductId ==formData.ProductId);
                     aggiornaStock.Quantity = aggiornaStock.Quantity - formData.Quantity;
 
                     return RedirectToAction("PurchasesView");
