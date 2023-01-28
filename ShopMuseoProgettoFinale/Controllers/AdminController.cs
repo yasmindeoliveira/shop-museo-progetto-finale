@@ -161,7 +161,7 @@ namespace ShopMuseoProgettoFinale.Controllers
                     //ADESSO dimnuire la quantità nel magazzino del prodotto
 
                     int PurchasedProductId = formData.ProductId;
-                    Stock aggiornaStock = db.Stocks.Where(p=>p.ProductId ==formData.ProductId);
+                    Stock aggiornaStock = db.Stocks.Where(p=>p.ProductId == PurchasedProductId).FirstOrDefault();
                     aggiornaStock.Quantity = aggiornaStock.Quantity - formData.Quantity;
 
                     return RedirectToAction("PurchasesView");
