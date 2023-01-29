@@ -15,6 +15,7 @@
             </a>
         </div>
         <div class="welcome-title"></div>
+        @*  searchInput  *@
         <div class="cols-xs-12 col-sm-9 col-md-4" id="search">
             
                 <form>
@@ -67,10 +68,96 @@
 
 </div>
 
-@*--------------------------------------------------------------
+@*------------------------Finito Slides--------------------------------------
 *@
 
-     @section Scripts  {
+<h3>Discover Our Products</h3>
+<div class="container-fluid">
+
+
+    <div id="spinner-loader" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span style="width:100px;" class="sr-only"></span>
+        </div>
+    </div>
+   
+
+    <div id="productsDiv" class="row"></div>
+    <div id="noProductsDiv"> No Producst To Show </div>
+
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        
+        loadList();
+
+        document.getElementById("search").addEventListener("keyup", searchProducts);
+
+        function searchProducts(){
+            let stringaDiRicerca = document.getElementById("search").value;
+
+            console.log(stringaDiRicerca);
+            loadList(stringaDiRicerca);
+        }
+
+        debugger; 
+
+       function loadList(searchString){
+
+          axios.get("/api/products", {
+              params:{
+                  search:searchString
+              }
+
+          }).then((res)=>{
+              if(res.data.length == 0 ){
+                  document.querySelector("#noProductsDiv").classList.remove("d-none");
+                  document.querySelector("#productsDiv").classList.add("d-none");
+                  debugger;
+              } else {
+                  document.querySelector("#productsDiv").classList.remove("d-none");
+                  document.querySelector("#noProductsDiv").classList.add("d-none");
+
+                  document.querySelector("#productsDiv").innerHTML ="";
+
+                  res.data.forEach(product=> {
+
+                        document.querySelector("#productsDiv").innerHTML += `
+                          <div class="col-12 col-md-6 col-sm-4 p-2">
+
+                          <div class="card h-100">
+                          <img src="${product.pictureUrl}" class="card-image-top" >
+
+
+                          <div class="card-body">
+                                                <h5 class="card-title">${product.name}</h5>
+                                                       
+                                                <p class="card-text">${product.description}</p>
+                                                <p class="card-text">${product.price}</p>
+                                                         <a class="btn btn-primary" href="/User/Details/${product.id}">Dettagli</a>
+                                                        <a class="btn btn-primary" href="/User/Buy/">Buy</a>
+                                              </div>
+
+                          </div>
+
+                          </div>
+                          `;
+                  });
+              }
+
+           document.querySelector("#spinner-loader").classList.add("d-none");
+
+            }).catch((error) => {
+                console.log(error);
+            });
+
+        }
+
+    </script>
+     
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

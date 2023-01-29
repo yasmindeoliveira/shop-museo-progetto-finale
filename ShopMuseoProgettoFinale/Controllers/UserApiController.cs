@@ -12,18 +12,45 @@ namespace ShopMuseoProgettoFinale.Controllers
     {
         [HttpGet]
         [Route("products")]
-        public IActionResult Products()
+        public IActionResult Products(string? search)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                List<Product> listaProdotti = db.Products.ToList<Product>();
+                List<Product> articoli = new List<Product>();
+                if (search is null || search == "")
+                {
+                    articoli = db.Products.ToList<Product>();
+                }
+                else
+                {
+                    articoli = db.Products.Where(p => p.Name.ToLower().Contains(search.ToLower())).ToList<Product>();
+                }
+
+                return Ok(articoli);
+            }
+
+        }
 
 
-                return Ok(listaProdotti);
+        [HttpGet("{id}")]
+        [Route("products")]
+        public IActionResult Products(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Product articolo = db.Products.Where(p => p.Id == id).FirstOrDefault();
+
+                if (articolo is null)
+                {
+                    return NotFound("L'articolo non è stato trovato con questo id");
+                }
+
+                return Ok(articolo);
             }
         }
-        //----------------------------
-        [Route("details")]
+
+            //----------------------------
+            [Route("details")]
         public IActionResult Details(int id)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
