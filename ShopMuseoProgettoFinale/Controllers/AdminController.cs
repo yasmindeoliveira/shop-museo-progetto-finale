@@ -2,81 +2,72 @@
 using ShopMuseoProgettoFinale.Database;
 using ShopMuseoProgettoFinale.Models;
 
-namespace ShopMuseoProgettoFinale.Controllers
-{
-    public class AdminController : Controller
-    {
-        public IActionResult Index()
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+namespace ShopMuseoProgettoFinale.Controllers {
+    public class AdminController : Controller {
+        public IActionResult Index() {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 List<Product> productList = db.Products.ToList();
                 return View("Index", productList);
             }
 
         }
 
+        #region Create Product
         //---------------------------------------------------------------------
         [HttpGet]
-        public IActionResult CreateProduct()
-        {
-
+        public IActionResult CreateProduct() {
+            // Qui va aggiunto "Create" perché altrimenti viene ritornata una view chiamata CreateProduct,
+            // diversa dalla view ritornata dal metodo subito sotto
             return View();
         }
         //---------------------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public IActionResult CreateProduct(Product formData) {
+            // TODO: Aggiungere un ViewModel per permettere all'admin di aggiungere una quantità iniziale
+            if (!ModelState.IsValid) {
 
-        public IActionResult CreateProduct(Product formData)
-        {
-            if (!ModelState.IsValid)
-            {
-
-                return View("Create", formData);
+                return View(formData);
             }
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                db.Products.Add(formData);
-                db.SaveChanges();
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
+                db.AddProduct(formData);
             }
 
             return RedirectToAction("Index");
         }
-        //---------------------------------------------------------------------
+        #endregion
+
+        #region Update Product
         [HttpGet]
-        public IActionResult UpdateProduct(int id)
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+        public IActionResult UpdateProduct(int id) {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 Product productFound = db.Products.Find(id);
 
-                if (productFound != null)
-                {
-                    return View("UpdateProduct", productFound);
-
+                // Meglio "is not null" invece di != perché è più preciso e leggibil
+                if (productFound is not null) {
+                    return View(productFound);
                 }
-                else
-                {
-                    return NotFound("il prodotto non è stato trovato, non esiste");
+                else {
+                    return NotFound($"Non è stato trovato nessun prodotto con {id}");
                 }
             }
         }
-        //---------------------------------------------------------------------
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateProduct(int id, Product formData)
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                if (!ModelState.IsValid)
-                {
-
-                    return View("UpdateProduct", formData);
+        public IActionResult UpdateProduct(int id, Product formData) {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
+                if (!ModelState.IsValid) {
+                    return View(formData);
                 }
-                else
-                {
+                else {
                     Product productFound = db.Products.Find(id);
+                    // If check per controllare che l'id sia sempre valido, altrimenti il programma crasherebbe
+                    if (productFound is null) {
+                        return NotFound($"Non è stato trovato nessun prodotto con {id}");
+                    }
+
                     productFound.Name = formData.Name;
                     productFound.Price = formData.Price;
                     productFound.Description = formData.Description;
@@ -87,33 +78,31 @@ namespace ShopMuseoProgettoFinale.Controllers
                 }
             }
         }
-        //---------------------------------------------------------------------
+        #endregion
+
+        #region Delete Product
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteProduct(int id)
-        {
+        public IActionResult DeleteProduct(int id) {
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 Product productFound = db.Products.Find(id);
-                if (productFound != null)
-                {
-                    db.Products.Remove(productFound);
-                    db.SaveChanges();
+                if (productFound != null) {
+                    db.RemoveProduct(productFound);
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    return NotFound("il prodotto da cancellare non è stato trovato");
+                else {
+                    return NotFound("Il prodotto da cancellare non è stato trovato");
                 }
             }
         }
+        #endregion
+
+        /*
         //---------------------------------------------------------------
         //Metodi per Purchases
-        public IActionResult PurchasesView()
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+        public IActionResult PurchasesView() {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 List<Purchase> purchaseList = db.Purchases.ToList();
                 return View("PurchasesView", purchaseList);
 
@@ -121,17 +110,13 @@ namespace ShopMuseoProgettoFinale.Controllers
         }
         //---------------------------------------------------------------------
         [HttpGet]
-        public IActionResult PurchaseCreate(int id)
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+        public IActionResult PurchaseCreate(int id) {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 Product productFound = db.Products.Find(id);
-                if (productFound != null)
-                {
+                if (productFound != null) {
                     return NotFound("questo prodotto non puoi acquistare");
                 }
-                else
-                {
+                else {
                     Purchase newPurchase = new Purchase();
                     newPurchase.ProductId = id;
                     return View("PurchaseCreate", newPurchase);
@@ -141,19 +126,15 @@ namespace ShopMuseoProgettoFinale.Controllers
         }
 
         [HttpPost]
-        public IActionResult PurchaseCreate(Purchase formData)
-        {
+        public IActionResult PurchaseCreate(Purchase formData) {
             //qua arriverà quanità che vuole acquistare e nome, 
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                if (!ModelState.IsValid)
-                {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
+                if (!ModelState.IsValid) {
                     return View("PurchaseCreate", formData);
                 }
-                else
-                {
-                    
+                else {
+
                     formData.Date = DateOnly.FromDateTime(DateTime.Now);
                     db.Purchases.Add(formData);
                     db.SaveChanges();
@@ -161,7 +142,7 @@ namespace ShopMuseoProgettoFinale.Controllers
                     //ADESSO dimnuire la quantità nel magazzino del prodotto
 
                     int PurchasedProductId = formData.ProductId;
-                    Stock aggiornaStock = db.Stocks.Where(p=>p.ProductId == PurchasedProductId).FirstOrDefault();
+                    Stock aggiornaStock = db.Stocks.Where(p => p.ProductId == PurchasedProductId).FirstOrDefault();
                     aggiornaStock.Quantity = aggiornaStock.Quantity - formData.Quantity;
 
                     return RedirectToAction("PurchasesView");
@@ -171,10 +152,8 @@ namespace ShopMuseoProgettoFinale.Controllers
         }
         //--------------------------RESUPPLIES--------------
         [HttpGet]
-        public IActionResult ViewResupplies()
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+        public IActionResult ViewResupplies() {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 List<Resupply> resupplyLista = db.Resupplies.ToList();
 
                 return View(resupplyLista);
@@ -183,10 +162,8 @@ namespace ShopMuseoProgettoFinale.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResupplyCreate()
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
+        public IActionResult ResupplyCreate() {
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
                 List<Product> listaProdotti = db.Products.ToList();
                 ProductResupplyView newModelView = new ProductResupplyView();
                 newModelView.ProductList = listaProdotti;
@@ -197,38 +174,23 @@ namespace ShopMuseoProgettoFinale.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ResupplyCreate(ProductResupplyView formData)
-        {
-            if (!ModelState.IsValid)
-            {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
+        public IActionResult ResupplyCreate(ProductResupplyView formData) {
+            if (!ModelState.IsValid) {
+                using (ApplicationDbContext db = new ApplicationDbContext()) {
                     //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
                     List<Product> listaProdotti = db.Products.ToList();
                     formData.ProductList = listaProdotti;
                     return View("ResupplyCreate", formData);
                 }
             }
-            else
-            {
-                using (ApplicationDbContext db = new ApplicationDbContext())
-                {
+            else {
+                using (ApplicationDbContext db = new ApplicationDbContext()) {
                     db.Resupplies.Add(formData.Resupply);
                     db.SaveChanges();
                     return RedirectToAction("ViewResupplies");
                 }
 
             }
-        }
-
-
-
-
-
-
-
-
-
-
+        }*/
     }
 }
