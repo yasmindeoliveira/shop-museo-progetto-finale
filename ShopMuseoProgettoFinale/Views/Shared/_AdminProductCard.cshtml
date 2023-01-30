@@ -12,20 +12,20 @@
 
     <div class="d-flex mt-auto justify-content-center">
         <a href="@Url.Action(action: "Details", controller: "User", values: new { id = Model.Id})"
-        class="btn m-1 mx-2 btn-primary">
+           class="btn m-1 mx-2 btn-primary">
             <span class="material-symbols-rounded m-0">
                 info
             </span>
         </a>
         <a href="@Url.Action(action: "UpdateProduct", controller: "Admin", values: new { id = Model.Id})"
-        class="btn m-1 mx-2 btn-warning">
+           class="btn m-1 mx-2 btn-warning">
             <span class="material-symbols-rounded m-0">
                 edit
             </span>
         </a>
         <form asp-controller="Admin" asp-action="DeleteProduct" method="post" asp-route-id="@Model.Id">
             <button class="btn m-1 mx-2 btn-danger" type="submit"
-                 href="@Url.Action(action: "DeleteProduct", controller: "Admin", new { id = Model.Id})">
+                    href="@Url.Action(action: "DeleteProduct", controller: "Admin", new { id = Model.Id})">
                 <span class="material-symbols-rounded m-0">
                     delete_forever
                 </span>
