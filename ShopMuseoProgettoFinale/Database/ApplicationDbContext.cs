@@ -40,5 +40,17 @@ namespace ShopMuseoProgettoFinale.Database
             // non viene eseguito automaticamente e quindi le migrations per il login falliscono
             base.OnModelCreating(modelBuilder);
         }
+
+        // Aggiungi un prodotto senza pensare a dover salvare
+        public int AddProduct(Product product) {
+            Products.Add(product);
+            return SaveChanges();
+        }
+
+        // Rimuovi un prodotto senza pensare a dover salvare
+        public int RemoveProduct(Product product) {
+            Products.Remove(product);
+            return SaveChanges();
+        }
     }
 }

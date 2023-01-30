@@ -1,0 +1,19 @@
+﻿@model List<Product>
+@{
+    Layout = "_Layout";
+}
+
+<div class="container-fluid my-3">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-10">
+            <div class="row g-4">
+                @foreach (Product product in Model) {
+                    <div class="col-md-4 col-lg-3 col-12 d-flex align-items-stretch">
+                        @* Usa una view parziale, che è solo un pezzetto di HTML, per creare ogni card *@
+                        @await Html.PartialAsync("_AdminProductCard", product)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
