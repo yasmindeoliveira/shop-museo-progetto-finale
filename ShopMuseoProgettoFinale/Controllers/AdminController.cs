@@ -171,7 +171,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 ProductResupplyView newModelView = new ProductResupplyView();
                 newModelView.ProductList = listaProdotti;
 
-                return View(newModelView);
+                return View("ResupplyCreate", newModelView);
             }
         }
 
@@ -182,6 +182,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 using (ApplicationDbContext db = new ApplicationDbContext()) {
                     //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
                     List<Product> listaProdotti = db.Products.ToList();
+                    formData.Resupply.Date = DateOnly.FromDateTime(DateTime.Now);
                     formData.ProductList = listaProdotti;
                     return View("ResupplyCreate", formData);
                 }
