@@ -22,7 +22,7 @@
     <script type="text/javascript">
         const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 
-        axios.get(`https://localhost:7119/api/articolo/${id}`).then((res) => {
+        axios.get(`https://localhost:7119/api/product/${id}`).then((res) => {
       
             document.getElementById('productTitle').innerHTML +=  ` ${res.data.name}`;
             document.getElementById("productDescription").innerHTML +=  `

@@ -26,7 +26,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
 
 
         [HttpGet("{id}")]
-        [Route("product/{id}")]
+        [Route("product")]
         public IActionResult Product(int id) {
 
             if (id < 1) return BadRequest("L'Id non può essere minore di 1");
