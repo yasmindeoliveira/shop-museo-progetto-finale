@@ -178,17 +178,24 @@ namespace ShopMuseoProgettoFinale.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ResupplyCreate(ProductResupplyView formData) {
+            formData.Resupply.Date = DateOnly.FromDateTime(DateTime.Now);
             if (!ModelState.IsValid) {
                 using (ApplicationDbContext db = new ApplicationDbContext()) {
                     //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
                     List<Product> listaProdotti = db.Products.ToList();
-                    formData.Resupply.Date = DateOnly.FromDateTime(DateTime.Now);
                     formData.ProductList = listaProdotti;
                     return View("ResupplyCreate", formData);
                 }
             }
             else {
                 using (ApplicationDbContext db = new ApplicationDbContext()) {
+                    // Trova il prodotto
+                    var foundProduct = db.Products.Find(formData.Resupply.ProductId);
+
+                    // Aggiornane la quantità
+                    foundProduct.Quantity = foundProduct.Quantity + formData.Resupply.Quantity;
+
+                    // Salva tutte le modifiche
                     db.Resupplies.Add(formData.Resupply);
                     db.SaveChanges();
                     return RedirectToAction("ViewResupplies");
