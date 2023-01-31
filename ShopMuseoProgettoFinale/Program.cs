@@ -37,4 +37,4 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-app.Run();
+app.Run(url: "https://localhost:7128");
