@@ -198,7 +198,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                     // Salva tutte le modifiche
                     db.Resupplies.Add(formData.Resupply);
                     db.SaveChanges();
-                    return RedirectToAction("ViewResupplies");
+                    return RedirectToAction("Index");
                 }
 
             }
