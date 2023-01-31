@@ -149,8 +149,11 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 }
             }
 
-        }
+        }*/
+
         //--------------------------RESUPPLIES--------------
+
+
         [HttpGet]
         public IActionResult ViewResupplies() {
             using (ApplicationDbContext db = new ApplicationDbContext()) {
@@ -191,6 +194,6 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 }
 
             }
-        }*/
+        }
     }
 }
