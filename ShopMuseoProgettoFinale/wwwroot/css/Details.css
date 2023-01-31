@@ -1,0 +1,18 @@
+﻿body {
+}
+
+.details_Img {
+    width: 100%;
+}
+
+ #titleImageDiv {
+     padding:2%;
+     text-align:center;
+     border:solid 3px red;
+ }
+
+ #productDescription {
+     padding:3%;
+     border:solid 2px black;
+ }
+

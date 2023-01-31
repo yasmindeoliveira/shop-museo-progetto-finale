@@ -2,16 +2,19 @@
     Layout = "_Layout";
 }
 
+@section links {
+    <link rel="stylesheet" href="~/css/Details.css" />
+}
 
 <div class="container">
-
     <div class="row">
-        <div class="col col-12 col-sm-7 col-lg-6">
-            <h3 id="productTitle"></h3>
+        <div class="col col-12 col-sm-12 col-lg-6 col-md-6" id="titleImageDiv">
+            <h3 id="productTitle"></h3> 
         </div>
-        <div class="col col-12 col-sm-5 col-lg-6">
-            <div id="productDescription">
-            </div>
+
+
+        <div class="col col-12 col-sm-12 col-md-6 ol-lg-6" id="productDescription">
+         
         </div>
 
     </div>
@@ -24,14 +27,15 @@
 
         axios.get(`https://localhost:7128/api/product/${id}`).then((res) => {
       
-            document.getElementById('productTitle').innerHTML +=  ` ${res.data.name}`;
+            document.getElementById('productTitle').innerHTML +=  `${res.data.name}`;
+            document.getElementById('titleImageDiv').innerHTML += `<img class="details_Img" src="${res.data.pictureUrl}">`;
             document.getElementById("productDescription").innerHTML +=  `
-            <img src="${res.data.pictureUrl}">
+            
             <p>${res.data.description}</p>
-            <p>price: ${res.data.price}Euro</p>
+            <p>price: ${res.data.price} Euro</p>
             `
             if(res.data.quantity<=4){
-                document.getElementById("productDescription").innerHTML += `only ${res.data.quantity} left`;
+                document.getElementById("productDescription").innerHTML += `<p style="color:red; text-weight:bold; ">only ${res.data.quantity} left</p>`;
             }
             
              
