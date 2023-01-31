@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Admin\Resupply.cshtml" />
+    <Content Remove="Views\Admin\ResupplyCreate.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Admin\Resupply.cshtml" />
+    <None Include="Views\Admin\ResupplyCreate.cshtml" />
   </ItemGroup>
 
 </Project>
