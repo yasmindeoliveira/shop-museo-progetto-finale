@@ -16,7 +16,6 @@ namespace ShopMuseoProgettoFinale.Database
         public DbSet<Product> Products { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Resupply> Resupplies { get; set; }
-        public DbSet<Stock> Stocks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlServer(ConnectionString);

@@ -10,7 +10,7 @@ namespace ShopMuseoProgettoFinale.Controllers
     [ApiController]
     public class UserApiController : ControllerBase
     {
-        [HttpGet]
+        /*[HttpGet]
         [Route("products")]
         public IActionResult Products(string? search)
         {
@@ -119,7 +119,7 @@ namespace ShopMuseoProgettoFinale.Controllers
                 }
             }
 
-        }
+        }*/
 
         //-------------------------------------------------------------------
 

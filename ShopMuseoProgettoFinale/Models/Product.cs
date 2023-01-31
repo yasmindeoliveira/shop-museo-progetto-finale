@@ -18,5 +18,8 @@ namespace ShopMuseoProgettoFinale.Models {
 
         [Range(0, double.MaxValue, ErrorMessage = "Il prezzo non può essere negativo.")]
         public double Price { get; set; }
+
+        [Range(0, int.MaxValue, ErrorMessage = "La quantità del prodotto non può essere negativa.")]
+        public int Quantity { get; set; }
     }
 }

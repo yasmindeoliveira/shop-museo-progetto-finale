@@ -6,6 +6,9 @@ namespace ShopMuseoProgettoFinale.Models {
 
         public DateOnly Date { get; set; }
 
+        [MaxLength(32, ErrorMessage = "Il nome non può superare i 32 caratteri")]
+        public string Name { get; set; }
+
         public int ProductId { get; set; }
         [ForeignKey(nameof(ProductId))]
         public Product? Product { get; set; }
