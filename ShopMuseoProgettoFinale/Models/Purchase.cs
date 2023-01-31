@@ -7,6 +7,7 @@ namespace ShopMuseoProgettoFinale.Models {
         public DateOnly Date { get; set; }
 
         [MaxLength(32, ErrorMessage = "Il nome non può superare i 32 caratteri")]
+        [MinLength(1, ErrorMessage = "Il nome non può essere vuoto")]
         public string Name { get; set; }
 
         public int ProductId { get; set; }
