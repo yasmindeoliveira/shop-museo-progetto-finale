@@ -1,22 +1,26 @@
-﻿@model Product
+﻿@model Resupply
 
 <div class="container">
 
     <form asp-controller="Admin" asp-action="ResupplyCreate" method="post" class="title-card bg-tabella py-4 px-4">
         @Html.AntiForgeryToken()
-        <div class="form-group">
+
+        <div class="mb-3">
             <label for="resupplyDate">Data:</label>
             <input type="date" class="form-control" id="resupplyDate"/>
+            <span asp-validation-for="Date" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label for="productName">Nome Prodotto:</label>
             <input type="text" class="form-control" id="productName"/>
+            <span asp-validation-for="Product" class="text-danger"></span>
         </div>
         
         <div class="form-group">
             <label for="supplierName">Nome Fornitore:</label>
             <input type="text" class="form-control" id="supplierName"/>
+            <span asp-validation-for="SupplierName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -24,7 +28,9 @@
             <input type="number" class="form-control" id="purchasePrice"/>
         </div>
         <button type="submit" class="btn mybutton">Registra</button>
+        <span asp-validation-for="Price" class="text-danger"></span>
     </form>
+
 
 </div>
 
