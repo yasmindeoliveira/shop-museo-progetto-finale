@@ -6,25 +6,26 @@
     <link rel="stylesheet" href="~/css/Details.css" />
 }
 
-@* 
+@*
     Il form non ha un modo per fare post e mancano i metodi adatti per rimodellare la pagina in base a cosa succede
     Inoltre, il layout fa ancora modificato un po'
 *@
 
 <div class="container">
     <div class="row">
+        @* Foto *@
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             <img id="productImage" class="details_Img" src="">
         </div>
+
+        @* Dati *@
         <div class="col-12 col-sm-12 col-md-6 col-lg-6" id="productDescription">
             <h3 id="productTitle"></h3>
         </div>
-        <div id="quantitàDaAcquistare">
-        </div>
-        <div>
-            <div id="postPurchase" class="row">
+        <div id="quantitàDaAcquistare" />
 
-            </div>
+        @* Form *@
+        <div id="postPurchase" class="row">
         </div>
     </div>
 </div>
@@ -41,27 +42,27 @@
 @section Scripts {
 
     <script type="text/javascript">
-    const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+        const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 
-    @* Funzione per riempire la pagina con i dati necessari *@
-    axios.get(`https://localhost:7128/api/product/${id}`)
-        .then((res) => {
-            formatter = Intl.NumberFormat('it-IT', {
-                style: 'currency',
-                currency: 'EUR'
-            })
+        @* Funzione per riempire la pagina con i dati necessari *@
+            axios.get(`https://localhost:7128/api/product/${id}`)
+                .then((res) => {
+                    formatter = Intl.NumberFormat('it-IT', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    })
 
-            document.getElementById('productTitle').innerHTML += `${res.data.name}`;
-            document.getElementById('productImage').setAttribute('src', res.data.pictureUrl);
-            document.getElementById('hiddenImageSuccess').setAttribute('src', res.data.pictureUrl);
-            document.getElementById("productDescription").innerHTML += `<p>${res.data.description}</p>
-                                                                        <p>Prezzo: ${formatter.format(res.data.price)}</p>`
+                    document.getElementById('productTitle').innerHTML += `${res.data.name}`;
+                    document.getElementById('productImage').setAttribute('src', res.data.pictureUrl);
+                    document.getElementById('hiddenImageSuccess').setAttribute('src', res.data.pictureUrl);
+                    document.getElementById("productDescription").innerHTML += `<p>${res.data.description}</p>
+                                                                                        <p>Prezzo: ${formatter.format(res.data.price)}</p>`
 
-            if (res.data.quantity <= 10) {
-                document.getElementById("productDescription").innerHTML += `<p class="text-danger fw-bold">Solo ${res.data.quantity} rimasti</p>`;
-            } else {
-                document.getElementById("productDescription").innerHTML += `<p class="text-success fw-semibold">Disponibilità immediata</p>`;
-            }
-        })
+                    if (res.data.quantity <= 10) {
+                        document.getElementById("productDescription").innerHTML += `<p class="text-danger fw-bold">Solo ${res.data.quantity} rimasti</p>`;
+                    } else {
+                        document.getElementById("productDescription").innerHTML += `<p class="text-success fw-semibold">Disponibilità immediata</p>`;
+                    }
+                })
     </script>
 }
