@@ -56,32 +56,33 @@ namespace ShopMuseoProgettoFinale.Controllers {
 
             using ApplicationDbContext db = new ApplicationDbContext();
 
+            // Controlla che esista il prodotto nel purchase
+            var foundProduct = db.Products.Find(formData.ProductId);
+            if (foundProduct is null) {
+                ModelState.AddModelError("ProductId", "L'Id provveduto per il prodotto non è stato trovato.");
+                return BadRequest(ModelState);
+            }
+
+            formData.Product = foundProduct;
+            // Controlla che la quantità nel purchase non sia più di quella nel prodotto
+            if (formData.Quantity > formData.Product.Quantity) {
+                ModelState.AddModelError("Quantity", "La quantità in magazzino è minore della quantità dell'acquisto.");
+            }
+
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            else {
 
-                // Controlla che esista il prodotto nel purchase
-                var foundProduct = db.Products.Find(formData.ProductId);
-                if (foundProduct is null) {
-                    return BadRequest("L'Id provveduto per il prodotto non è stato trovato.");
-                }
+            // Aggiungi il purchase al DB
+            formData.Date = DateOnly.FromDateTime(DateTime.Now);
+            db.Purchases.Add(formData);
+            formData.Product.Quantity -= formData.Quantity;
+            int dbChanges = db.SaveChanges();
 
-                formData.Product = foundProduct;
-                // Controlla che la quantità nel purchase non sia più di quella nel prodotto
-                if (formData.Quantity > formData.Product.Quantity) {
-                    return BadRequest("La quantità in magazzino è minore della quantità dell'acquisto.");
-                }
-
-                // Aggiungi il purchase al DB
-                formData.Date = DateOnly.FromDateTime(DateTime.Now);
-                db.Purchases.Add(formData);
-                formData.Product.Quantity -= formData.Quantity;
-                int dbChanges = db.SaveChanges();
-
-                return Ok($"Acquisto completato con successo! {dbChanges} modifiche apportate al db, " +
-                    $"{formData.Product.Quantity} prodotti rimasti");
-            }
+            return Ok(new {
+                QuantityLeft = formData.Product.Quantity,
+                Message = "Acquisto completato con successo!"
+            });
         }
     }
 }
