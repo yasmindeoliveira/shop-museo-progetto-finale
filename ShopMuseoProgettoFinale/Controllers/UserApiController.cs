@@ -60,18 +60,20 @@ namespace ShopMuseoProgettoFinale.Controllers {
             var foundProduct = db.Products.Find(formData.ProductId);
             if (foundProduct is null) {
                 ModelState.AddModelError("ProductId", "L'Id provveduto per il prodotto non è stato trovato.");
-                return BadRequest(ModelState);
+                return ValidationProblem(ModelState);
             }
 
             formData.Product = foundProduct;
             // Controlla che la quantità nel purchase non sia più di quella nel prodotto
             if (formData.Quantity > formData.Product.Quantity) {
                 ModelState.AddModelError("Quantity", "La quantità in magazzino è minore della quantità dell'acquisto.");
+                return ValidationProblem(ModelState);
             }
 
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            // Non serve secondo Microsoft, perché gli API lo fanno in automatico
+            //if (!ModelState.IsValid) {
+            //    return BadRequest(ModelState);
+            //}
 
             // Aggiungi il purchase al DB
             formData.Date = DateOnly.FromDateTime(DateTime.Now);
