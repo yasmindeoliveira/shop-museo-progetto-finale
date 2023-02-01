@@ -17,6 +17,14 @@
                 info
             </span>
         </a>
+
+        <a href="@Url.Action(action: "ResupplyCreate", controller: "Admin", values: new { id = Model.Id})"
+           class="btn m-1 mx-2 btn-info">
+            <span class="material-symbols-rounded m-0">
+                expand_less
+            </span>
+        </a>
+
         <a href="@Url.Action(action: "UpdateProduct", controller: "Admin", values: new { id = Model.Id})"
            class="btn m-1 mx-2 btn-warning">
             <span class="material-symbols-rounded m-0">

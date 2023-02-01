@@ -171,7 +171,8 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 ProductResupplyView newModelView = new ProductResupplyView();
                 newModelView.ProductList = listaProdotti;
 
-                return View("ResupplyCreate", newModelView);
+                return View(newModelView);
+
             }
         }
 
@@ -179,16 +180,21 @@ namespace ShopMuseoProgettoFinale.Controllers {
         [ValidateAntiForgeryToken]
         public IActionResult ResupplyCreate(ProductResupplyView formData) {
             formData.Resupply.Date = DateOnly.FromDateTime(DateTime.Now);
-            if (!ModelState.IsValid) {
-                using (ApplicationDbContext db = new ApplicationDbContext()) {
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                if (!ModelState.IsValid)
+                {
+                   
                     //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
                     List<Product> listaProdotti = db.Products.ToList();
                     formData.ProductList = listaProdotti;
-                    return View("ResupplyCreate", formData);
+                    return View(formData);
+                    
                 }
-            }
-            else {
-                using (ApplicationDbContext db = new ApplicationDbContext()) {
+                else
+                {
+
                     // Trova il prodotto
                     var foundProduct = db.Products.Find(formData.Resupply.ProductId);
 
@@ -199,8 +205,32 @@ namespace ShopMuseoProgettoFinale.Controllers {
                     db.Resupplies.Add(formData.Resupply);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
 
+                }
+            }  
+            
+        }
+
+        [HttpGet]
+        [Route("ResupplyCreate/{id}")]
+        public IActionResult ResupplyCreate (int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Product productFound = db.Products.Find(id);
+
+                if (productFound is not null)
+                {
+                    ProductResupplyView formData = new();
+                    formData.Resupply = new();
+                    formData.Resupply.ProductId = id;
+
+                    return View(formData);
+                }
+                else
+                {
+                    return NotFound($"Non è stato trovato nessun prodotto con {id}");
+                }
             }
         }
     }

@@ -9,10 +9,10 @@
                     <label>Select Product:</label>
                     <select asp-for="Resupply.ProductId" rows="10" class="d-block w-100">
                         <option value=""></option>
-                @foreach (Product product in Model.ProductList){
+                        @foreach (Product product in Model.ProductList){
                             
-                                <option value="@product.Id">@product.Name </option>
-                }
+                            <option value="@product.Id">@product.Name </option>
+                        }
                     </select>
                     <span asp-validation-for="Resupply.ProductId" class="text-danger"></span>
                 </div>
