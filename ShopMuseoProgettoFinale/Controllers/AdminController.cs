@@ -98,6 +98,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
         }
         #endregion
 
+        #region old code
         /*
         //---------------------------------------------------------------
         //Metodi per Purchases
@@ -152,6 +153,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
         }*/
 
         //--------------------------RESUPPLIES--------------
+        #endregion
 
 
         [HttpGet]
@@ -165,14 +167,21 @@ namespace ShopMuseoProgettoFinale.Controllers {
         }
 
         [HttpGet]
-        public IActionResult ResupplyCreate() {
+        public IActionResult ResupplyCreate(int? id) {
             using (ApplicationDbContext db = new ApplicationDbContext()) {
                 List<Product> listaProdotti = db.Products.ToList();
                 ProductResupplyView newModelView = new ProductResupplyView();
                 newModelView.ProductList = listaProdotti;
+                newModelView.Resupply = new Resupply();
+
+                if (id is not null) {
+                    var productFound = db.Products.Find(id);
+                    if (productFound is not null) {
+                        newModelView.Resupply.ProductId = (int)id;
+                    }
+                }
 
                 return View(newModelView);
-
             }
         }
 
@@ -181,19 +190,16 @@ namespace ShopMuseoProgettoFinale.Controllers {
         public IActionResult ResupplyCreate(ProductResupplyView formData) {
             formData.Resupply.Date = DateOnly.FromDateTime(DateTime.Now);
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                if (!ModelState.IsValid)
-                {
-                   
+            using (ApplicationDbContext db = new ApplicationDbContext()) {
+                if (!ModelState.IsValid) {
+
                     //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
                     List<Product> listaProdotti = db.Products.ToList();
                     formData.ProductList = listaProdotti;
                     return View(formData);
-                    
+
                 }
-                else
-                {
+                else {
 
                     // Trova il prodotto
                     var foundProduct = db.Products.Find(formData.Resupply.ProductId);
@@ -206,30 +212,6 @@ namespace ShopMuseoProgettoFinale.Controllers {
                     db.SaveChanges();
                     return RedirectToAction("Index");
 
-                }
-            }  
-            
-        }
-
-        [HttpGet]
-        [Route("ResupplyCreate/{id}")]
-        public IActionResult ResupplyCreate (int id)
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                Product productFound = db.Products.Find(id);
-
-                if (productFound is not null)
-                {
-                    ProductResupplyView formData = new();
-                    formData.Resupply = new();
-                    formData.Resupply.ProductId = id;
-
-                    return View(formData);
-                }
-                else
-                {
-                    return NotFound($"Non è stato trovato nessun prodotto con {id}");
                 }
             }
         }
