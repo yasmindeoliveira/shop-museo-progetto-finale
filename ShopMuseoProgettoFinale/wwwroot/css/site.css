@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: 'Fredoka', sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -22,5 +23,15 @@ body {
 }
 
 .details_Img {
-    max-width:300px:
+    max-width:300px;
 }
+
+.card {
+    transition: transform.2s;
+}
+
+.classHover:hover {
+    opacity: 0.5;
+    transform: scale(1.02);
+}
+
