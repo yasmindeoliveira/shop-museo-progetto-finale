@@ -8,10 +8,6 @@ namespace ShopMuseoProgettoFinale.Controllers {
             return View();
         }
 
-        public IActionResult Details()
-        {
-            return View();
-        }
         public IActionResult Buy()
         {
             return View();
