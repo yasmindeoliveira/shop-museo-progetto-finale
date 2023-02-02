@@ -13,7 +13,7 @@ namespace ShopMuseoProgettoFinale.Models {
 
         [Url(ErrorMessage = "Il link all'immagine deve essere un URL formattato correttamente.")]
         [MaxLength(256, ErrorMessage = "Il link all'immagine non può essere più lungo di 256 caratteri.")]
-        [EndsWith(".png", ".jpg", ".webp", ErrorMessage = "Il link deve finire con l'estensione di un'immagine.")]
+        [EndsWith(".png", ".jpg", ".webp", ".jpeg", ErrorMessage = "Il link deve finire con l'estensione di un'immagine.")]
         public string PictureUrl { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Il prezzo non può essere negativo.")]

@@ -29,7 +29,7 @@
 <div class="slide-pictures-container">
 
     <div class="slideBoots">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -43,11 +43,11 @@
                 </div>
             </div>
 
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
@@ -78,9 +78,12 @@
         </div>
     </div>
 
-
-    <div id="productsDiv" class="row"></div>
-    <div id="noProductsDiv"> No Producst To Show </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-lg-9 col-md-10 d-flex justify-content-center">
+            <div id="productsDiv" class="row"></div>
+            <div id="noProductsDiv" class="d-none text-center"> No Products To Show </div>
+        </div>
+    </div>
 
 </div>
 
@@ -107,7 +110,6 @@
                 params: {
                     search: searchString
                 }
-
             }).then((res) => {
                 if (res.data.length == 0) {
                     document.querySelector("#noProductsDiv").classList.remove("d-none");
@@ -120,27 +122,29 @@
                     document.querySelector("#productsDiv").innerHTML = "";
 
                     res.data.forEach(product => {
+                        formatter = Intl.NumberFormat('it-IT', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
 
                         document.querySelector("#productsDiv").innerHTML += `
-                                  <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
-
-                                  <div class="card h-100">
-                                  <img src="${product.pictureUrl}" class="card-image-top" >
-
-
-                                  <div class="card-body">
-                                                        <h5 class="card-title">${product.name}</h5>
-
-                                                        <p class="card-text">${product.description}</p>
-                                                        <p class="card-text">${product.price}</p>
-                                                                 <a class="btn btn-primary" href="/User/Details/${product.id}">Dettagli</a>
-                                                                <a class="btn btn-primary" href="/User/Buy/">Buy</a>
-                                                      </div>
-
-                                  </div>
-
-                                  </div>
-                                  `;
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-flex align-items-stretch">
+                    <div class="card w-100 text-center border-0 rounded-0">
+                        <div class="ratio ratio-4x3">
+                            <img src="${product.pictureUrl}" class="rounded-0 card-img-top object-fit-contain">
+                        </div>
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <h5 class="card-title lead">${product.name}</h5>
+                            <p class="card-text lead">${product.description}</p>
+                            <p class="card-text mt-auto">${formatter.format(product.price)}</p>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a class="btn btn-outline-dark rounded-0" href="/User/Details/${product.id}">Dettagli</a>
+                                <a class="btn btn-outline-dark rounded-0" href="/User/Buy/${product.id}">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                          `;
                     });
                 }
 
@@ -148,14 +152,12 @@
 
             }).catch((error) => {
                 console.log(error);
+                document.querySelector("#noProductsDiv").classList.remove("d-none");
+                document.querySelector("#spinner-loader").classList.add("d-none");
+                document.querySelector("#productsDiv").classList.add("d-none");
             });
 
         }
 
     </script>
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-     }
+}

@@ -1,15 +1,22 @@
 ﻿@model List<Product>
+@using ShopMuseoProgettoFinale.Controllers
 @{
     Layout = "_Layout";
 }
 
 <div class="container-fluid my-3">
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center gy-3">
+        <div class="col-12 d-flex justify-content-center">
+            <a href="@Url.Action(controller: "Admin", action: nameof(AdminController.CreateProduct))" class="btn btn-outline-primary rounded-0">
+                <span class="material-symbols-outlined">
+                    add_box
+                </span>
+            </a>
+        </div>
         <div class="col-12 col-md-10">
             <div class="row g-4">
                 @foreach (Product product in Model) {
                     <div class="col-md-4 col-lg-3 col-12 d-flex align-items-stretch">
-                        @* Usa una view parziale, che è solo un pezzetto di HTML, per creare ogni card *@
                         @await Html.PartialAsync("_AdminProductCard", product)
                     </div>
                 }

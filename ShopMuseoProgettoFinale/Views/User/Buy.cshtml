@@ -1,3 +1,130 @@
-﻿
-@{
+﻿@{
+    Layout = "_Layout";
+}
+
+@*
+    Il form non ha un modo per fare post e mancano i metodi adatti per rimodellare la pagina in base a cosa succede
+    Inoltre, il layout fa ancora modificato un po'
+*@
+
+<div id="purchaseFormContainer" class="container">
+    <div class="row">
+        @* Foto *@
+        <div class="col-12 col-sm-12 col-md-6 p-2">
+            <img id="productImage" class="img-fluid" src="">
+        </div>
+        @* Dati *@
+        <div class="col-12 col-sm-12 col-md-6 p-2">
+            <h3 id="productTitle"></h3>
+            <div class="px-3">
+                <p id="productDescription"></p>
+                <p class="fw-bold" id="quantityLeftNotice"></p>
+                <p id="productPrice"></p>
+
+                @* Form *@
+                <form id="postPurchase" class="row needs-validation" novalidate>
+                    <div class="col-4 p-1">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" id="quantityInput" placeholder="" value="" required
+                                   min="1" />
+                            <label for="quantityInput">Quantity</label>
+                            <div bs-validation-for="Quantity" class="invalid-feedback">
+                                La quantità dell'acquisto del prodotto deve essere tra 1 e
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 p-1">
+                        <div class="form-floating">
+                            <input id="nameInput" type="text" value="" placeholder="" required="" class="form-control" maxlength="32" />
+                            <label for="nameInput">Name</label>
+                            <div bs-validation-for="Name" class="invalid-feedback">
+                                Il nome del cliente è obbligatorio, e deve essere meno di 32 caratteri.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 p-1">
+                        <button class="btn btn-outline-dark w-100" id="buyButton">Buy Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="successfulPurchase" class="container-fluid d-none">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4 text-center">
+            <img id="hiddenImageSuccess" src="" alt="" class="img-fluid object-fit-cover" />
+            <p class="text-success">L'acquisto è stato completato con successo! Grazie mille!</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(function () {
+            const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+
+            // Funzione per riempire la pagina con i dati necessari
+            axios.get(`https://localhost:7128/api/product/${id}`).then((res) => {
+                formatter = Intl.NumberFormat('it-IT', {
+                    style: 'currency',
+                    currency: 'EUR'
+                })
+
+                $('#productTitle').html(`${res.data.name}`);
+                $('#productImage').attr('src', res.data.pictureUrl);
+                $('#hiddenImageSuccess').attr('src', res.data.pictureUrl);
+                $("#productDescription").html(res.data.description);
+                $('#productPrice').html(`Prezzo: ${formatter.format(res.data.price)}`);
+                $('#quantityInput').attr('max', res.data.quantity);
+                $('[bs-validation-for="Quantity"]')[0].innerHTML += ` ${res.data.quantity}`;
+
+
+                let quantityLeftNotice = $('#quantityLeftNotice');
+                if (res.data.quantity == 0) {
+                    quantityLeftNotice.html(`Esaurito`);
+                    quantityLeftNotice.addClass('text-danger');
+                    $('#buyButton').attr('disabled', true);
+                } else if (res.data.quantity <= 10) {
+                    quantityLeftNotice.html(`Solo ${res.data.quantity}`);
+                    quantityLeftNotice.addClass('text-danger');
+                } else {
+                    quantityLeftNotice.html("Disponibilità immediata");
+                    quantityLeftNotice.addClass('text-success');
+                }
+            });
+
+            $("#postPurchase").submit(function (e) {
+                e.preventDefault();
+                $(this).addClass('was-validated');
+                $('#buyButton').attr('disabled', true);
+
+                if (!$(this)[0].checkValidity()) {
+                    $('#buyButton').attr('disabled', false);
+                    return;
+                }
+
+                axios.post('https://localhost:7128/api/purchase', {
+                    Name: $("#nameInput").val(),
+                    ProductId: id,
+                    Quantity: $("#quantityInput").val()
+                }).then(function (response) {
+                    $('#purchaseFormContainer').addClass('d-none');
+                    $('#successfulPurchase').removeClass('d-none');
+                    console.log(response);
+                }).catch(function (error) {
+                    $('#buyButton').attr('disabled', false);
+
+                    for (const [key, value] of Object.entries(error.response.data.errors)) {
+                        const validationElements = $(`[bs-validation-for="${key}"]`);
+                        validationElements.html(value);
+                    }
+
+                    console.log(error.response.data);
+                });
+            });
+        });
+    </script>
 }
