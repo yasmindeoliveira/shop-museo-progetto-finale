@@ -79,11 +79,15 @@
     </div>
 
     <div class="row d-flex justify-content-center">
-        <div class="col-12 col-lg-9 col-md-10 d-flex justify-content-center">
+        <div class="d-flex justify-content-center p-5">
+
             <div id="productsDiv" class="row"></div>
             <div id="noProductsDiv" class="d-none text-center"> No Products To Show </div>
         </div>
     </div>
+
+</div>
+
 
 </div>
 
@@ -127,23 +131,28 @@
                             currency: 'EUR'
                         });
 
+
                         document.querySelector("#productsDiv").innerHTML += `
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-flex align-items-stretch">
-                    <div class="card w-100 text-center border-0 rounded-0">
-                        <div class="ratio ratio-4x3">
-                            <img src="${product.pictureUrl}" class="rounded-0 card-img-top object-fit-contain">
+                        <div class="col-lg-4 p-3">
+                    <a href='/User/Buy/${product.id}' class="url-box">
+                <figure class='newsCard news-Slide-up '>
+                            <img src="${product.pictureUrl}" />
+                    <div class='newsCaption px-4'>
+                        <div class="d-flex align-items-center justify-content-between cnt-title">
+                                    <h5 class='newsCaption-title text-white m-0'>${product.name}</h5>
+                                            
+
+                                    <i class="fas fa-arrow-alt-circle-right "></i>
                         </div>
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <h5 class="card-title lead">${product.name}</h5>
-                            <p class="card-text lead">${product.description}</p>
-                            <p class="card-text mt-auto">${formatter.format(product.price)}</p>
-                            <div class="d-flex justify-content-center gap-2">
-                                <a class="btn btn-outline-dark rounded-0" href="/User/Buy/${product.id}">Acquista ora</a>
-                            </div>
+                        <div class='newsCaption-content d-flex'>
+                                    <p class="col-10 py-3 px-0"> ${formatter.format(product.price)}
                         </div>
                     </div>
-                </div>
-                                          `;
+                    <span class="overlay"></span>
+                </figure>
+            </a>
+        </div>
+                        `;
                     });
                 }
 
