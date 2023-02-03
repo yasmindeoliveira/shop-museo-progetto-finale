@@ -17,6 +17,25 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+var scope = app.Services
+    .GetService<IServiceScopeFactory>()?
+    .CreateScope();
+
+if(scope is not null)
+{
+    using (scope)
+    {
+        var roleManager = scope
+            .ServiceProvider
+            .GetService<RoleManager<IdentityRole>>();
+        if(roleManager.Roles.Count() == 0)
+        {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            await roleManager.CreateAsync(new IdentityRole("Customer"));
+        }
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
     app.UseExceptionHandler("/User/Error");
