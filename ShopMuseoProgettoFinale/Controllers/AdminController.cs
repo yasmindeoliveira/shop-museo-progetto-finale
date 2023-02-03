@@ -72,6 +72,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                     productFound.Price = formData.Price;
                     productFound.Description = formData.Description;
                     productFound.PictureUrl = formData.PictureUrl;
+                    productFound.Quantity = formData.Quantity;
                     db.SaveChanges();
 
                     return RedirectToAction("Index");
