@@ -11,7 +11,22 @@
             <h5 class="card-title"> @Model.Name </h5>
             <h5 class="card-text">@(Model.Price.ToString("C"))</h5>
             <p class="card-text">@Model.Description</p>
-            <p class="card-text mt-auto">Quantità: @Model.Quantity</p>
+            <p class="card-text mt-auto @(Model.Quantity <= 20 ? "fw-bold text-danger" : "")">
+                @switch (Model.Quantity) {
+                    case 0: {
+                        <text>Esaurito!</text>
+                        break;
+                    }
+                    case <= 20: {
+                        <text>Quantità: Solo @Model.Quantity rimasti!</text>
+                        break;
+                    }
+                    default: {
+                        <text>Quantità: @Model.Quantity</text>
+                        break;
+                    }
+                }
+            </p>
         </div>
     </div>
 
