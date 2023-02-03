@@ -70,8 +70,6 @@
 
 <h3>Discover Our Products</h3>
 <div class="container-fluid">
-
-
     <div id="spinner-loader" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
             <span style="width:100px;" class="sr-only"></span>
@@ -79,18 +77,12 @@
     </div>
 
     <div class="row d-flex justify-content-center">
-        <div class="d-flex justify-content-center p-5">
-
+        <div class="col-12 col-lg-9 col-md-10 d-flex justify-content-center">
             <div id="productsDiv" class="row"></div>
             <div id="noProductsDiv" class="d-none text-center"> No Products To Show </div>
         </div>
     </div>
-
 </div>
-
-
-</div>
-
 
 @section Scripts {
     <script type="text/javascript">
@@ -105,8 +97,6 @@
             console.log(stringaDiRicerca);
             loadList(stringaDiRicerca);
         }
-
-        debugger;
 
         function loadList(searchString) {
 
@@ -132,27 +122,24 @@
                         });
 
 
-                        document.querySelector("#productsDiv").innerHTML += `
-                        <div class="col-lg-4 p-3">
-                    <a href='/User/Buy/${product.id}' class="url-box">
-                <figure class='newsCard news-Slide-up '>
-                            <img src="${product.pictureUrl}" />
-                    <div class='newsCaption px-4'>
-                        <div class="d-flex align-items-center justify-content-between cnt-title">
-                                    <h5 class='newsCaption-title text-white m-0'>${product.name}</h5>
-                                            
-
-                                    <i class="fas fa-arrow-alt-circle-right "></i>
-                        </div>
-                        <div class='newsCaption-content d-flex'>
-                                    <p class="col-10 py-3 px-0"> ${formatter.format(product.price)}
-                        </div>
-                    </div>
-                    <span class="overlay"></span>
-                </figure>
-            </a>
-        </div>
-                        `;
+                        $("#productsDiv").append(
+                        `<div class="col-lg-4 p-3">
+                            <a href='/User/Buy/${product.id}' class="url-box">
+                                <figure class='newsCard news-Slide-up '>
+                                    <img class="object-fit-cover" src="${product.pictureUrl}" />
+                                    <div class='newsCaption px-4'>
+                                        <div class="d-flex align-items-center justify-content-between cnt-title">
+                                            <h5 class='newsCaption-title text-white m-0'>${product.name}</h5>
+                                            <i class="fas fa-arrow-alt-circle-right "></i>
+                                        </div>
+                                        <div class='newsCaption-content d-flex'>
+                                            <p class="col-10 py-3 px-0"> ${formatter.format(product.price)}
+                                        </div>
+                                    </div>
+                                    <span class="overlay"></span>
+                                </figure>
+                            </a>
+                        </div>`);
                     });
                 }
 
@@ -164,8 +151,6 @@
                 document.querySelector("#spinner-loader").classList.add("d-none");
                 document.querySelector("#productsDiv").classList.add("d-none");
             });
-
         }
-
     </script>
 }

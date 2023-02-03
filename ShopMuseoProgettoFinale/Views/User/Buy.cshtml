@@ -88,7 +88,7 @@
                     quantityLeftNotice.addClass('text-danger');
                     $('#buyButton').attr('disabled', true);
                 } else if (res.data.quantity <= 10) {
-                    quantityLeftNotice.html(`Solo ${res.data.quantity}`);
+                    quantityLeftNotice.html(`Solo ${res.data.quantity} rimasti!`);
                     quantityLeftNotice.addClass('text-danger');
                 } else {
                     quantityLeftNotice.html("Disponibilità immediata");
