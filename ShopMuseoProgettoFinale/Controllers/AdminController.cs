@@ -7,6 +7,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
         public IActionResult Index() {
             using (ApplicationDbContext db = new ApplicationDbContext()) {
                 List<Product> productList = db.Products.ToList();
+                productList = productList.OrderBy(p => p.Quantity).ToList();
                 return View("Index", productList);
             }
 
