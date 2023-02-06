@@ -1,12 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ShopMuseoProgettoFinale.Views.Admin
-{
-    public class CreateProductModel : PageModel
-    {
-        public void OnGet()
-        {
+namespace ShopMuseoProgettoFinale.Views.Admin {
+    public class CreateProductModel : PageModel {
+        public void OnGet() {
         }
     }
 }

@@ -21,5 +21,7 @@ namespace ShopMuseoProgettoFinale.Models {
 
         [Range(0, int.MaxValue, ErrorMessage = "La quantità del prodotto non può essere negativa.")]
         public int Quantity { get; set; }
+
+        public List<Like>? Likes { get; set; } = new();
     }
 }

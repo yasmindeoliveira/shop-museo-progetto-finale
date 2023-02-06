@@ -1,9 +1,8 @@
 global using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using ShopMuseoProgettoFinale.Database;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 
@@ -14,33 +13,33 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
-var scope = app.Services
+IServiceScope scope = app.Services
     .GetService<IServiceScopeFactory>()?
     .CreateScope();
 
 if (scope is not null) {
     using (scope) {
-        var roleManager = scope
+        RoleManager<IdentityRole> roleManager = scope
             .ServiceProvider
             .GetService<RoleManager<IdentityRole>>();
 
         if (!await roleManager.RoleExistsAsync("Admin")) {
-            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            _ = await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
 
         if (!await roleManager.RoleExistsAsync("Customer")) {
-            await roleManager.CreateAsync(new IdentityRole("Customer"));
+            _ = await roleManager.CreateAsync(new IdentityRole("Customer"));
         }
     }
 }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
-    app.UseExceptionHandler("/User/Error");
+    _ = app.UseExceptionHandler("/User/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    _ = app.UseHsts();
 }
 
 app.UseHttpsRedirection();

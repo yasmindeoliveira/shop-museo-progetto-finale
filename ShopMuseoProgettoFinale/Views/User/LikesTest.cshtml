@@ -1,0 +1,30 @@
+﻿
+
+<button onclick="addLike()" class="btn btn-outline-success">Add</button>
+<button onclick="removeLike()" class="btn btn-outline-danger">Remove</button>
+
+@section Scripts {
+    <script type="text/javascript">
+        function addLike() {
+            axios({
+                url: 'https://localhost:7128/api/addlike/1',
+                method: 'put'
+            }).then(function (res) {
+                console.log(res);
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+
+        function removeLike() {
+            axios({
+                url: 'https://localhost:7128/api/removelike/1',
+                method: 'delete'
+            }).then(function (res) {
+                console.log(res);
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    </script>
+}

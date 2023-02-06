@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using ShopMuseoProgettoFinale.Models;
-using System.Diagnostics;
 
 namespace ShopMuseoProgettoFinale.Controllers {
     public class UserController : Controller {
@@ -8,11 +8,13 @@ namespace ShopMuseoProgettoFinale.Controllers {
             return View();
         }
 
-        public IActionResult Buy()
-        {
+        public IActionResult Buy() {
             return View();
         }
 
+        public IActionResult LikesTest() {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {

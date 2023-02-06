@@ -8,11 +8,10 @@ namespace ShopMuseoProgettoFinale.Controllers {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller {
         public IActionResult Index() {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                List<Product> productList = db.Products.ToList();
-                productList = productList.OrderBy(p => p.Quantity).ToList();
-                return View("Index", productList);
-            }
+            using ApplicationDbContext db = new();
+            List<Product> productList = db.Products.ToList();
+            productList = productList.OrderBy(p => p.Quantity).ToList();
+            return View("Index", productList);
         }
 
         #region Create Product
@@ -27,14 +26,12 @@ namespace ShopMuseoProgettoFinale.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateProduct(Product formData) {
-            // TODO: Aggiungere un ViewModel per permettere all'admin di aggiungere una quantità iniziale
             if (!ModelState.IsValid) {
-
                 return View(formData);
             }
 
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                db.AddProduct(formData);
+            using (ApplicationDbContext db = new()) {
+                _ = db.AddProduct(formData);
             }
 
             return RedirectToAction("Index");
@@ -44,40 +41,34 @@ namespace ShopMuseoProgettoFinale.Controllers {
         #region Update Product
         [HttpGet]
         public IActionResult UpdateProduct(int id) {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                Product productFound = db.Products.Find(id);
+            using ApplicationDbContext db = new();
+            Product productFound = db.Products.Find(id);
 
-                // Meglio "is not null" invece di != perché è più preciso e leggibil
-                if (productFound is not null) {
-                    return View(productFound);
-                } else {
-                    return NotFound($"Non è stato trovato nessun prodotto con {id}");
-                }
-            }
+            // Meglio "is not null" invece di != perché è più preciso e leggibil
+            return productFound is not null ? View(productFound) : NotFound($"Non è stato trovato nessun prodotto con {id}");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult UpdateProduct(int id, Product formData) {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                if (!ModelState.IsValid) {
-                    return View(formData);
-                } else {
-                    Product productFound = db.Products.Find(id);
-                    // If check per controllare che l'id sia sempre valido, altrimenti il programma crasherebbe
-                    if (productFound is null) {
-                        return NotFound($"Non è stato trovato nessun prodotto con {id}");
-                    }
-
-                    productFound.Name = formData.Name;
-                    productFound.Price = formData.Price;
-                    productFound.Description = formData.Description;
-                    productFound.PictureUrl = formData.PictureUrl;
-                    productFound.Quantity = formData.Quantity;
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
+            using ApplicationDbContext db = new();
+            if (!ModelState.IsValid) {
+                return View(formData);
+            } else {
+                Product productFound = db.Products.Find(id);
+                // If check per controllare che l'id sia sempre valido, altrimenti il programma crasherebbe
+                if (productFound is null) {
+                    return NotFound($"Non è stato trovato nessun prodotto con {id}");
                 }
+
+                productFound.Name = formData.Name;
+                productFound.Price = formData.Price;
+                productFound.Description = formData.Description;
+                productFound.PictureUrl = formData.PictureUrl;
+                productFound.Quantity = formData.Quantity;
+                _ = db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
         }
         #endregion
@@ -86,15 +77,13 @@ namespace ShopMuseoProgettoFinale.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteProduct(int id) {
-
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                Product productFound = db.Products.Find(id);
-                if (productFound != null) {
-                    db.RemoveProduct(productFound);
-                    return RedirectToAction("Index");
-                } else {
-                    return NotFound("Il prodotto da cancellare non è stato trovato");
-                }
+            using ApplicationDbContext db = new();
+            Product productFound = db.Products.Find(id);
+            if (productFound != null) {
+                _ = db.RemoveProduct(productFound);
+                return RedirectToAction("Index");
+            } else {
+                return NotFound("Il prodotto da cancellare non è stato trovato");
             }
         }
         #endregion
@@ -102,31 +91,29 @@ namespace ShopMuseoProgettoFinale.Controllers {
         #region Resupplies
         [HttpGet]
         public IActionResult ViewResupplies() {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                List<Resupply> resupplyLista = db.Resupplies.ToList();
+            using ApplicationDbContext db = new();
+            List<Resupply> resupplyLista = db.Resupplies.ToList();
 
-                return View(resupplyLista);
-            }
-
+            return View(resupplyLista);
         }
 
         [HttpGet]
         public IActionResult ResupplyCreate(int? id) {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                List<Product> listaProdotti = db.Products.ToList();
-                ProductResupplyView newModelView = new ProductResupplyView();
-                newModelView.ProductList = listaProdotti;
-                newModelView.Resupply = new Resupply();
+            using ApplicationDbContext db = new();
+            List<Product> listaProdotti = db.Products.ToList();
+            ProductResupplyView newModelView = new() {
+                ProductList = listaProdotti,
+                Resupply = new Resupply()
+            };
 
-                if (id is not null) {
-                    var productFound = db.Products.Find(id);
-                    if (productFound is not null) {
-                        newModelView.Resupply.ProductId = (int) id;
-                    }
+            if (id is not null) {
+                Product productFound = db.Products.Find(id);
+                if (productFound is not null) {
+                    newModelView.Resupply.ProductId = (int) id;
                 }
-
-                return View(newModelView);
             }
+
+            return View(newModelView);
         }
 
         [HttpPost]
@@ -134,28 +121,23 @@ namespace ShopMuseoProgettoFinale.Controllers {
         public IActionResult ResupplyCreate(ProductResupplyView formData) {
             formData.Resupply.Date = DateOnly.FromDateTime(DateTime.Now);
 
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                if (!ModelState.IsValid) {
+            using ApplicationDbContext db = new();
+            if (!ModelState.IsValid) {
+                //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
+                List<Product> listaProdotti = db.Products.ToList();
+                formData.ProductList = listaProdotti;
+                return View(formData);
+            } else {
+                // Trova il prodotto
+                Product foundProduct = db.Products.Find(formData.Resupply.ProductId);
 
-                    //per visualizzare le liste di prodotti nel momento in cui si crea domanda per Resupply
-                    List<Product> listaProdotti = db.Products.ToList();
-                    formData.ProductList = listaProdotti;
-                    return View(formData);
+                // Aggiornane la quantità
+                foundProduct.Quantity += formData.Resupply.Quantity;
 
-                } else {
-
-                    // Trova il prodotto
-                    var foundProduct = db.Products.Find(formData.Resupply.ProductId);
-
-                    // Aggiornane la quantità
-                    foundProduct.Quantity = foundProduct.Quantity + formData.Resupply.Quantity;
-
-                    // Salva tutte le modifiche
-                    db.Resupplies.Add(formData.Resupply);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-
-                }
+                // Salva tutte le modifiche
+                _ = db.Resupplies.Add(formData.Resupply);
+                _ = db.SaveChanges();
+                return RedirectToAction("Index");
             }
         }
         #endregion

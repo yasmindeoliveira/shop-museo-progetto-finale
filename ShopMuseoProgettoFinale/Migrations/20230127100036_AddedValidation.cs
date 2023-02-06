@@ -2,15 +2,12 @@
 
 #nullable disable
 
-namespace ShopMuseoProgettoFinale.Migrations
-{
+namespace ShopMuseoProgettoFinale.Migrations {
     /// <inheritdoc />
-    public partial class AddedValidation : Migration
-    {
+    public partial class AddedValidation : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<string>(
+        protected override void Up(MigrationBuilder migrationBuilder) {
+            _ = migrationBuilder.AlterColumn<string>(
                 name: "SupplierName",
                 table: "Resupplies",
                 type: "nvarchar(64)",
@@ -21,9 +18,8 @@ namespace ShopMuseoProgettoFinale.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<string>(
+        protected override void Down(MigrationBuilder migrationBuilder) {
+            _ = migrationBuilder.AlterColumn<string>(
                 name: "SupplierName",
                 table: "Resupplies",
                 type: "nvarchar(max)",

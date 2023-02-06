@@ -2,18 +2,15 @@
 
 #nullable disable
 
-namespace ShopMuseoProgettoFinale.Migrations
-{
+namespace ShopMuseoProgettoFinale.Migrations {
     /// <inheritdoc />
-    public partial class QuantityMovedToProductNameAddedToPurchases : Migration
-    {
+    public partial class QuantityMovedToProductNameAddedToPurchases : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
+        protected override void Up(MigrationBuilder migrationBuilder) {
+            _ = migrationBuilder.DropTable(
                 name: "Stocks");
 
-            migrationBuilder.AddColumn<string>(
+            _ = migrationBuilder.AddColumn<string>(
                 name: "Name",
                 table: "Purchases",
                 type: "nvarchar(32)",
@@ -21,7 +18,7 @@ namespace ShopMuseoProgettoFinale.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "Quantity",
                 table: "Products",
                 type: "int",
@@ -30,26 +27,23 @@ namespace ShopMuseoProgettoFinale.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
+        protected override void Down(MigrationBuilder migrationBuilder) {
+            _ = migrationBuilder.DropColumn(
                 name: "Name",
                 table: "Purchases");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "Quantity",
                 table: "Products");
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Stocks",
-                columns: table => new
-                {
+                columns: table => new {
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.ForeignKey(
+                constraints: table => {
+                    _ = table.ForeignKey(
                         name: "FK_Stocks_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
@@ -57,7 +51,7 @@ namespace ShopMuseoProgettoFinale.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Stocks_ProductId",
                 table: "Stocks",
                 column: "ProductId");
