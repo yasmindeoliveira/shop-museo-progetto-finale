@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopMuseoProgettoFinale.Database;
 using ShopMuseoProgettoFinale.Models;
-using System.Data;
 
 namespace ShopMuseoProgettoFinale.Controllers {
-
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller {
         public IActionResult Index() {
@@ -14,7 +13,6 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 productList = productList.OrderBy(p => p.Quantity).ToList();
                 return View("Index", productList);
             }
-
         }
 
         #region Create Product
@@ -52,8 +50,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 // Meglio "is not null" invece di != perché è più preciso e leggibil
                 if (productFound is not null) {
                     return View(productFound);
-                }
-                else {
+                } else {
                     return NotFound($"Non è stato trovato nessun prodotto con {id}");
                 }
             }
@@ -65,8 +62,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
             using (ApplicationDbContext db = new ApplicationDbContext()) {
                 if (!ModelState.IsValid) {
                     return View(formData);
-                }
-                else {
+                } else {
                     Product productFound = db.Products.Find(id);
                     // If check per controllare che l'id sia sempre valido, altrimenti il programma crasherebbe
                     if (productFound is null) {
@@ -96,72 +92,14 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 if (productFound != null) {
                     db.RemoveProduct(productFound);
                     return RedirectToAction("Index");
-                }
-                else {
+                } else {
                     return NotFound("Il prodotto da cancellare non è stato trovato");
                 }
             }
         }
         #endregion
 
-        #region old code
-        /*
-        //---------------------------------------------------------------
-        //Metodi per Purchases
-        public IActionResult PurchasesView() {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                List<Purchase> purchaseList = db.Purchases.ToList();
-                return View("PurchasesView", purchaseList);
-
-            }
-        }
-        //---------------------------------------------------------------------
-        [HttpGet]
-        public IActionResult PurchaseCreate(int id) {
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                Product productFound = db.Products.Find(id);
-                if (productFound != null) {
-                    return NotFound("questo prodotto non puoi acquistare");
-                }
-                else {
-                    Purchase newPurchase = new Purchase();
-                    newPurchase.ProductId = id;
-                    return View("PurchaseCreate", newPurchase);
-                }
-            }
-
-        }
-
-        [HttpPost]
-        public IActionResult PurchaseCreate(Purchase formData) {
-            //qua arriverà quanità che vuole acquistare e nome, 
-
-            using (ApplicationDbContext db = new ApplicationDbContext()) {
-                if (!ModelState.IsValid) {
-                    return View("PurchaseCreate", formData);
-                }
-                else {
-
-                    formData.Date = DateOnly.FromDateTime(DateTime.Now);
-                    db.Purchases.Add(formData);
-                    db.SaveChanges();
-
-                    //ADESSO dimnuire la quantità nel magazzino del prodotto
-
-                    int PurchasedProductId = formData.ProductId;
-                    Stock aggiornaStock = db.Stocks.Where(p => p.ProductId == PurchasedProductId).FirstOrDefault();
-                    aggiornaStock.Quantity = aggiornaStock.Quantity - formData.Quantity;
-
-                    return RedirectToAction("PurchasesView");
-                }
-            }
-
-        }*/
-
-        //--------------------------RESUPPLIES--------------
-        #endregion
-
-
+        #region Resupplies
         [HttpGet]
         public IActionResult ViewResupplies() {
             using (ApplicationDbContext db = new ApplicationDbContext()) {
@@ -183,7 +121,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 if (id is not null) {
                     var productFound = db.Products.Find(id);
                     if (productFound is not null) {
-                        newModelView.Resupply.ProductId = (int)id;
+                        newModelView.Resupply.ProductId = (int) id;
                     }
                 }
 
@@ -204,8 +142,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
                     formData.ProductList = listaProdotti;
                     return View(formData);
 
-                }
-                else {
+                } else {
 
                     // Trova il prodotto
                     var foundProduct = db.Products.Find(formData.Resupply.ProductId);
@@ -221,5 +158,6 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 }
             }
         }
+        #endregion
     }
 }

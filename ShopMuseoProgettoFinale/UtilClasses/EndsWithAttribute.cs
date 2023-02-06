@@ -29,7 +29,7 @@
                 if (castedValue.EndsWith(validEnd)) { return ValidationResult.Success; }
             }
 
-            return new ValidationResult($"Il valore inserito non finisce con una delle seguenti stringhe:" +
+            return new ValidationResult("Il valore inserito non finisce con una delle seguenti stringhe:" +
                 $"{string.Join(", ", ValidEnds)}");
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#pragma warning disable
 #nullable disable
 
 namespace ShopMuseoProgettoFinale.Migrations

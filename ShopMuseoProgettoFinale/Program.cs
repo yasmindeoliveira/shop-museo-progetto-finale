@@ -5,7 +5,6 @@ using ShopMuseoProgettoFinale.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -48,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication(); ;
+app.UseAuthentication();
 
 app.UseAuthorization();
 
