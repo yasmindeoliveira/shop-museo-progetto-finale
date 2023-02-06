@@ -3,29 +3,59 @@
     padding: 0;
     margin: 0;
     height: 100vh;
+    background-color: #F3EBF7;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 
 @media (max-width: 700px) {
 
+   
 
-    .logo {
-        text-align: center;
+    .box {
+        position: relative;
+        padding-top:5px;
+        padding-right: 2vw;
     }
 
-    #search {
-        margin: 0 auto;
+    .input {
+        padding: 8px;
+        width: 60px;
+        height: 40px;
+        background: none;
+        border: 3px solid #ffd52d;
+        border-radius: 50px;
+        box-sizing: border-box;
+        font-family: Comic Sans MS;
+        font-size: 26px;
+        color: #ffd52d;
+        outline: none;
+        transition: .5s;
     }
 
-        #search > form {
-            text-align: center;
-            width: 100%;
-        }
-
-    form > input {
-        width: 300px;
-        height: 30px;
+    .box:hover input {
+        width: 200px;
+        background: #C3B1E1;
+        border-radius: 10px;
     }
+
+    .box i {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translate(-50%,-50%);
+        font-size: 26px;
+        color: #ffd52d;
+        transition: .2s;
+    }
+
+    .box:hover i {
+        opacity: 0;
+        z-index: -1;
+    }
+
+    /*--------------------------------------------*/
 
     /*-----------------slides-----------------*/
     .slide-pictures-container {
@@ -34,7 +64,6 @@
         margin-top: 10px;
         padding: 10px;
     }
-
 
     .photoAfterSlide {
         visibility: hidden;
@@ -45,46 +74,166 @@
         visibility: hidden;
         height: 0px;
     }
-
     /*----------------------------------*/
 
+    .Title {
+        width: 100vw;
+        height: 10vh;
+        min-height: 100px;
+    }
 
+        .Title > span {
+            position: absolute;
+            left: 50%;
+            top: 26%;
+            transform: translate(-50%, -50%);
+            display: block;
+            color: #C796F7;
+            font-size: 66px;
+            letter-spacing: 8px;
+            cursor: pointer;
+        }
+
+        .Title > span::before {
+                content: "MuseumShop";
+                position: absolute;
+                color: transparent;
+                background-image: repeating-linear-gradient( 45deg, transparent 0, transparent 2px, yellow 2px, white 4px );
+                -webkit-background-clip: text;
+                top: 0px;
+                left: 0;
+                z-index: -1;
+                transition: 1s;
+            }
+
+        .Title > span::after {
+                content: "MuseumShop";
+                position: absolute;
+                color: transparent;
+                background-image: repeating-linear-gradient( 135deg, transparent 0, transparent 2px, white 2px, yellow 4px );
+                -webkit-background-clip: text;
+                top: 0px;
+                left: 0px;
+                transition: 1s;
+            }
+
+        .Title > span:hover:before {
+                top: 10px;
+                left: 10px;
+            }
+
+        .Title > span:hover:after {
+                top: -10px;
+                left: -10px;
+            } 
 }
+
 
 @media (min-width:700px) {
     .logo-search-container {
         width: 100%;
         display: flex;
+        position: relative;
     }
 
-   
-
-    .welcome-title {
-        flex: 3;
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        text-align: center;
+    /*----------------------------------------------*/
+    .box {
+        position: relative;
+        padding-top: 2px;
+        padding-right: 2vw;
     }
 
-        .welcome-title::after {
-            font-size: 3rem;
-            content: "Museum Shop";
-        }
-
-    #search {
-        flex: 2;
-        display: flex;
-        justify-content: end;
-        padding-right: 5%;
-        align-items: center;
+    .input {
+        padding: 8px;
+        width: 60px;
+        height: 40px;
+        background: none;
+        border: 2px solid #ffd52d;
+        border-radius: 50px;
+        box-sizing: border-box;
+        font-family: Comic Sans MS;
+        font-size: 26px;
+        color: #ffd52d;
+        outline: none;
+        transition: .5s;
     }
 
-    form > input {
-        min-width: 165px;
-        width: 20vw;
-        max-width: 300px;
+    .box:hover input {
+        width: 350px;
+        background: #C3B1E1;
+        border-radius: 10px;
     }
+
+    .box i {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translate(-50%,-50%);
+        font-size: 26px;
+        color: #ffd52d;
+        transition: .2s;
+    }
+
+    .box:hover i {
+        opacity: 0;
+        z-index: -1;
+    }
+    
+    /*--------------------------------------------*/
+    .Title {
+        width: 100vw;
+        height: 10vh;
+        min-height: 100px;
+    }
+
+    .Title > span {
+        position: absolute;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        display: block;
+        color: #C796F7;
+        font-size: 80px;
+        letter-spacing: 8px;
+        cursor: pointer;
+    }
+
+    .Title > span::before {
+        content: "MuseumShop";
+        position: absolute;
+        color: transparent;
+        background-image: repeating-linear-gradient( 45deg, transparent 0, transparent 2px, yellow 2px, white 4px );
+        -webkit-background-clip: text;
+        top: 0px;
+        left: 0;
+        z-index: -1;
+        transition: 1s;
+    }
+
+    .Title > span::after {
+        content: "MuseumShop";
+        position: absolute;
+        color: transparent;
+        background-image: repeating-linear-gradient( 135deg, transparent 0, transparent 2px, white 2px, yellow 4px );
+        -webkit-background-clip: text;
+        top: 0px;
+        left: 0px;
+        transition: 1s;
+    }
+
+    .Title > span:hover:before {
+        top: 10px;
+        left: 10px;
+    }
+
+    .Title > span:hover:after {
+        top: -10px;
+        left: -10px;
+    } 
+/*---------------------------------*/
+
+ 
+
 
     /*slides*/
     .slide-pictures-container {
@@ -133,6 +282,77 @@
         text-align: center;
     }
 }
+
+/*-------------------------------------------------*/
+
+@media (min-width:1200px) {
+
+    .Title {
+        min-height: 130px;
+    }
+   
+    .Title > span {
+        position: absolute;
+        left: 50%;
+        top: 70%;
+        transform: translate(-50%, -50%);
+        display: block;
+        color: #C796F7;
+        font-size: 80px;
+        letter-spacing: 8px;
+        cursor: pointer;
+    }
+
+        .Title > span::before {
+            content: "MuseumShop";
+            position: absolute;
+            color: transparent;
+            background-image: repeating-linear-gradient( 45deg, transparent 0, transparent 2px, yellow 2px, white 4px );
+            -webkit-background-clip: text;
+            top: 0px;
+            left: 0;
+            z-index: -1;
+            transition: 1s;
+        }
+
+        .Title > span::after {
+            content: "MuseumShop";
+            position: absolute;
+            color: transparent;
+            background-image: repeating-linear-gradient( 135deg, transparent 0, transparent 2px, white 2px, yellow 4px );
+            -webkit-background-clip: text;
+            top: 0px;
+            left: 0px;
+            transition: 1s;
+        }
+
+        .Title > span:hover:before {
+            top: 10px;
+            left: 10px;
+        }
+
+        .Title > span:hover:after {
+            top: -10px;
+            left: -10px;
+        }
+    /*---------------------------------*/
+
+    #search {
+        flex: 2;
+        display: flex;
+        justify-content: end;
+        padding-right: 5%;
+        align-items: center;
+    }
+
+    form > input {
+        min-width: 165px;
+        width: 20vw;
+        max-width: 300px;
+    }
+
+}
+
 
 /*-------------------------------------------Loding-----------------------------------------*/
 
@@ -229,8 +449,8 @@ figure img {
     transition: transform 0.4s -webkit-transform 0.4s;
 }
 
-/*------------------------------logo---- */
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+/*------------------------------logo---------------------------- */
+/*@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 
 #Entro {
     font-family: "Montserrat Medium";
@@ -328,4 +548,6 @@ span {
         opacity: 1;
         filter: blur(0);
     }
-}
+}*/
+
+/*----------------------------------------------------------------------------------*/

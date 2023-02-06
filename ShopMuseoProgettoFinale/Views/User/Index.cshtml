@@ -6,40 +6,35 @@
     <link rel="stylesheet" href="~/css/Index.css" />
 }
 
+@section SearchBar {
+    @*  searchInput  *@
+    <div class="box">
+        <form name="search">
+            <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+        </form>
+        <i class="fas fa-search"></i>
+
+    </div>
+}
+
 <div class="header-main-bar">
     <div class="logo-search-container">
-        @*logo*@
-        <div class="logo cols-xs-12 cols-md-4">
-            <div class="containerLogo">
-                <div class="box">
+       
 
-                    <div class="title">
-                        <span class="block"></span>
-                        <h1>Museum Shop<span></span></h1>
-                    </div>
+        @*musem*@
 
-                    <div class="role">
-                        <div class="block"></div>
-                        <p>Make Yourself Happy</p>
-                    </div>
+    <div class="Title">
+        <span>MuseumShop</span>
+    </div>
 
-                </div>
-            </div>
 
-        </div>
 
-        <div class="welcome-title"></div>
-        @*  searchInput  *@
-        <div class="cols-xs-12 col-sm-9 col-md-4" id="search">
-            <form>
-                <input type="text" class="" placeholder="Find your product..." />
-            </form>
-        </div>
     </div>
     @*-----------------------------------*@
 </div>
+
 @*-------------------------Finito Header----------------------------*@
-<h1 id="Entro">
+@*<h1 id="Entro">
     <span>Here</span>
     <span>you</span>
     <span>can</span>
@@ -51,7 +46,7 @@
     <span>your</span>
     <span>fav</span>
     <span>museum</span> 
-</h1>
+</h1>*@
  
 
 
