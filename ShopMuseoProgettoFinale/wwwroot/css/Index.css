@@ -8,11 +8,7 @@
     background-attachment: fixed;
 }
 
-
 @media (max-width: 700px) {
-
-   
-
     .box {
         position: relative;
         padding-top:5px;
@@ -37,7 +33,7 @@
     .box:hover input {
         width: 200px;
         background: rgba(238, 238, 59, 0.591);
-        ;
+        border-color:rebeccapurple;
         border-radius: 10px;
     }
 
@@ -83,7 +79,7 @@
         min-height: 100px;
     }
 
-        .Title > span {
+    .Title > span {
             position: absolute;
             left: 50%;
             top: 16%;
@@ -93,9 +89,9 @@
             font-size: 66px;
             letter-spacing: 8px;
             cursor: pointer;
-        }
+    }
 
-        .Title > span::before {
+    .Title > span::before {
                 content: "MuseumShop";
                 position: absolute;
                 color: transparent;
@@ -107,7 +103,7 @@
                 transition: 1s;
             }
 
-        .Title > span::after {
+    .Title > span::after {
                 content: "MuseumShop";
                 position: absolute;
                 color: transparent;
@@ -118,12 +114,12 @@
                 transition: 1s;
             }
 
-        .Title > span:hover:before {
+    .Title > span:hover:before {
                 top: 10px;
                 left: 10px;
             }
 
-        .Title > span:hover:after {
+    .Title > span:hover:after {
                 top: -10px;
                 left: -10px;
             } 
@@ -162,7 +158,7 @@
     .box:hover input {
         width: 350px;
         background: rgba(238, 238, 59, 0.591);
-        
+        border-color: rebeccapurple;
         border-radius: 10px;
     }
 
@@ -188,17 +184,17 @@
         min-height: 100px;
     }
 
-    .Title > span {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        display: block;
-        color: #C796F7;
-        font-size: 80px;
-        letter-spacing: 8px;
-        cursor: pointer;
-    }
+        .Title > span {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+            color: #5b5066;
+            font-size: 80px;
+            letter-spacing: 8px;
+            cursor: pointer;
+        }
 
     .Title > span::before {
         content: "MuseumShop";
@@ -292,20 +288,20 @@
     .Title {
         min-height: 130px;
     }
-   
-    .Title > span {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        display: block;
-        color: #C796F7;
-        font-size: 80px;
-        letter-spacing: 8px;
-        cursor: pointer;
-    }
 
-        .Title > span::before {
+        .Title > span {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+            color: #5b5066;
+            font-size: 80px;
+            letter-spacing: 8px;
+            cursor: pointer;
+        }
+
+    .Title > span::before {
             content: "MuseumShop";
             position: absolute;
             color: transparent;
@@ -317,7 +313,7 @@
             transition: 1s;
         }
 
-        .Title > span::after {
+    .Title > span::after {
             content: "MuseumShop";
             position: absolute;
             color: transparent;
@@ -328,12 +324,12 @@
             transition: 1s;
         }
 
-        .Title > span:hover:before {
+    .Title > span:hover:before {
             top: 10px;
             left: 10px;
         }
 
-        .Title > span:hover:after {
+    .Title > span:hover:after {
             top: -10px;
             left: -10px;
         }
@@ -355,11 +351,10 @@
 
 }
 
+/*----------------------------------------------Loding---------------------------------------------*/
 
-/*-------------------------------------------Loding-----------------------------------------*/
 
-
-/*------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
 
 .newsCard {
     position: relative;
@@ -411,7 +406,7 @@ figure img {
     transition: transform 0.4s, -webkit-transform 0.4s;
 }
 
-    .newsCaption i {
+.newsCaption i {
         font-size: 24px;
     }
 
@@ -451,7 +446,7 @@ figure img {
     transition: transform 0.4s -webkit-transform 0.4s;
 }
 
-/*------------------------------logo---------------------------- */
+/*-----------------------------------------logo-------------------------------------- */
 /*@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 
 #Entro {
@@ -580,7 +575,7 @@ span {
     }
 }
 
-.productsDiv:hover >h2 span {
+.productsDiv:hover > h2 span {
     animation: bounce .6s;
 }
 
