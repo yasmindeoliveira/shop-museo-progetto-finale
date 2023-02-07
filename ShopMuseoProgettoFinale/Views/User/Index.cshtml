@@ -17,6 +17,7 @@
     </div>
 }
 
+
 <div class="header-main-bar">
     <div class="logo-search-container">
        
@@ -47,10 +48,6 @@
     <span>fav</span>
     <span>museum</span> 
 </h1>*@
- 
-
-
-
 
 <div class="slide-pictures-container">
 
@@ -153,7 +150,7 @@
 
                         $("#productsDiv").append(
                         `<div class="col-lg-4 p-3">
-                            <a href='/User/Buy/${product.id}' class="url-box">
+                                    <a href='/User/Buy/${product.id}' class="url-box text-decoration-none" style="color:white">
                                 <figure class='newsCard news-Slide-up '>
                                     <img class="object-fit-cover" src="${product.pictureUrl}" />
                                     <div class='newsCaption px-4'>
@@ -162,12 +159,13 @@
                                             <i class="fas fa-arrow-alt-circle-right "></i>
                                         </div>
                                         <div class='newsCaption-content d-flex'>
-                                            <p class="col-10 py-3 px-0"> ${formatter.format(product.price)}
+                                            <p class="col-10 py-3 px-0"> ${formatter.format(product.price)} </br></br>
+                              </a>                              <button class="likeButton" style="border:none; background-color:transparent;"><i class="fas fa-heart"></i></button>
                                         </div>
                                     </div>
                                     <span class="overlay"></span>
                                 </figure>
-                            </a>
+                            
                         </div>`);
                     });
                 }

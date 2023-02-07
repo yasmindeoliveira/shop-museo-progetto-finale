@@ -17,23 +17,25 @@
 
     .input {
         padding: 8px;
-        width: 60px;
+        width: 40px;
         height: 40px;
         background: none;
-        border: 3px solid #ffd52d;
-        border-radius: 50px;
+        border:none;
         box-sizing: border-box;
         font-family: Comic Sans MS;
         font-size: 26px;
         color: #ffd52d;
         outline: none;
         transition: .5s;
+        
     }
 
     .box:hover input {
         width: 200px;
         background: rgba(238, 238, 59, 0.591);
         border-color:rebeccapurple;
+        border:solid 2px white;
+        box-shadow:yellow 0px 0px 2px, purple 0px 0px 2px;
         border-radius: 10px;
     }
 
@@ -145,7 +147,7 @@
         width: 60px;
         height: 40px;
         background: none;
-        border: 2px solid #ffd52d;
+       border:none;
         border-radius: 50px;
         box-sizing: border-box;
         font-family: Comic Sans MS;
@@ -158,6 +160,7 @@
     .box:hover input {
         width: 350px;
         background: rgba(238, 238, 59, 0.591);
+        border: 2px solid #ffd52d;
         border-color: rebeccapurple;
         border-radius: 10px;
     }
@@ -351,10 +354,9 @@
 
 }
 
-/*----------------------------------------------Loding---------------------------------------------*/
 
 
-/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------------Card START---------------------------------------------------------*/
 
 .newsCard {
     position: relative;
@@ -445,6 +447,7 @@ figure img {
     transition: transform 0.4s;
     transition: transform 0.4s -webkit-transform 0.4s;
 }
+/*-----------------------------------------Card END-------------------------------------- */
 
 /*-----------------------------------------logo-------------------------------------- */
 /*@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
@@ -547,7 +550,7 @@ span {
     }
 }*/
 
-/*--------------------------------products div--------------------------------------------------*/
+/*--------------------------------TEXT PRODUCTS products div--------------------------------------------------*/
 @import url(https://fonts.googleapis.com/css?family=Signika:700,300,600);
 .productsDiv > h2 {
     font-size: 34px;
@@ -664,3 +667,16 @@ span {
 .productsDiv > h2 span:nth-child(14) {
     animation-delay: .65s;
 }
+
+
+/*------------------likeButton START----------------*/
+.likeButton {
+    color:white ;
+}
+.likeButton:hover {
+        color: #bca3db;
+    }
+.likeButton:active {
+transform:scale(1.4);
+}
+/*------------------likeButton END----------------*/
