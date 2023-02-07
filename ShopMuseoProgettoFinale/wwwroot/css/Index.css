@@ -36,7 +36,8 @@
 
     .box:hover input {
         width: 200px;
-        background: #C3B1E1;
+        background: rgba(238, 238, 59, 0.591);
+        ;
         border-radius: 10px;
     }
 
@@ -85,7 +86,7 @@
         .Title > span {
             position: absolute;
             left: 50%;
-            top: 26%;
+            top: 16%;
             transform: translate(-50%, -50%);
             display: block;
             color: #C796F7;
@@ -160,7 +161,8 @@
 
     .box:hover input {
         width: 350px;
-        background: #C3B1E1;
+        background: rgba(238, 238, 59, 0.591);
+        
         border-radius: 10px;
     }
 
@@ -189,7 +191,7 @@
     .Title > span {
         position: absolute;
         left: 50%;
-        top: 60%;
+        top: 50%;
         transform: translate(-50%, -50%);
         display: block;
         color: #C796F7;
@@ -294,7 +296,7 @@
     .Title > span {
         position: absolute;
         left: 50%;
-        top: 70%;
+        top: 50%;
         transform: translate(-50%, -50%);
         display: block;
         color: #C796F7;
