@@ -1,0 +1,71 @@
+﻿@model Product
+@using ShopMuseoProgettoFinale.Controllers
+
+<div class="card w-100 rounded-0 border-0 text-center d-flex flex-column align-items-center">
+    <div class="classHover d-flex flex-column align-items-center flex-grow-1 w-100">
+        <div class="ratio ratio-4x3">
+            <img src="@Model.PictureUrl" alt="" class="card-img-top rounded-0 object-fit-contain" />
+        </div>
+
+        <div class="card-body d-flex flex-column align-items-center justify-content-start">
+            <h5 class="card-title"> @Model.Name </h5>
+            <h5 class="card-text">@(Model.Price.ToString("C"))</h5>
+            <p class="card-text">@Model.Description</p>
+            <p class="card-text mt-auto @(Model.Quantity <= 20 ? "fw-bold text-danger" : "")">
+                @switch (Model.Quantity) {
+                    case 0: {
+                        <text>Esaurito!</text>
+                        break;
+                    }
+                    case <= 20: {
+                        <text>Quantità: Solo @Model.Quantity rimasti!</text>
+                        break;
+                    }
+                    default: {
+                        <text>Quantità: @Model.Quantity</text>
+                        break;
+                    }
+                }
+            </p>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a href="@Url.Action(action: nameof(UserController.Buy),
+                             controller: "User",
+                             values: new { id = Model.Id})"
+           class="btn m-1 mx-2 btn-outline-primary">
+            <span class="material-symbols-outlined m-0">
+                info
+            </span>
+        </a>
+        <a href="@Url.Action(action: nameof(AdminController.ResupplyCreate),
+                             controller: "Admin",
+                             values: new { id = Model.Id})"
+           class="btn m-1 mx-2 btn-outline-info">
+            <span class="material-symbols-outlined m-0">
+                expand_less
+            </span>
+        </a>
+        <a href="@Url.Action(action: nameof(AdminController.UpdateProduct),
+                             controller:"Admin",
+                             values: new { id = Model.Id})"
+           class="btn m-1 mx-2 btn-outline-warning">
+            <span class="material-symbols-outlined m-0">
+                edit
+            </span>
+        </a>
+        <form asp-controller="Admin"
+              asp-action="@nameof(AdminController.DeleteProduct)"
+              method="post" asp-route-id="@Model.Id">
+            <button class="btn m-1 mx-2 btn-outline-danger" type="submit"
+                    href="@Url.Action(action: nameof(AdminController.DeleteProduct),
+                                      controller:"Admin",
+                                      new { id = Model.Id})">
+                <span class="material-symbols-outlined m-0">
+                    delete_forever
+                </span>
+            </button>
+        </form>
+    </div>
+</div>

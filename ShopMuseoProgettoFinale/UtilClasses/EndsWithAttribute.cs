@@ -1,4 +1,4 @@
-﻿namespace ShopMuseoProgettoFinale.UtilClasses {
+namespace ShopMuseoProgettoFinale.UtilClasses {
     /// <summary>
     /// Un'attributo di validazione per EF Core che si assicura che una proprietà di stringhe finisca con dei suffissi predefiniti.
     /// </summary>

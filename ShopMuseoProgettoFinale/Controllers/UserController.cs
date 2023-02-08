@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using ShopMuseoProgettoFinale.Models;
-using System.Diagnostics;
 
 namespace ShopMuseoProgettoFinale.Controllers {
     public class UserController : Controller {
-        private readonly ILogger<UserController> _logger;
-
-        public UserController(ILogger<UserController> logger) {
-            _logger = logger;
-        }
-
         public IActionResult Index() {
             return View();
         }
 
-        public IActionResult Privacy() {
+        public IActionResult Buy() {
+            return View();
+        }
+
+        public IActionResult LikesTest() {
             return View();
         }
 
