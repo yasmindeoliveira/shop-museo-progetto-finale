@@ -4,18 +4,18 @@ html {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .card-img-top {
@@ -23,7 +23,7 @@ body {
 }
 
 .details_Img {
-    max-width:300px;
+    max-width: 300px;
 }
 
 .card {
@@ -68,28 +68,16 @@ p {
     line-height: 1.5;
 }
 
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-li {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-}
-
 .social-icons {
     display: flex;
     justify-content: center;
 }
 
-    .social-icons li {
-        margin: 0 10px;
-    }
+.social-icons li {
+    margin: 0 10px;
+}
 
-    .social-icons a {
-        color: #fff;
-        font-size: 22px;
-    }
+.social-icons a {
+    color: #fff;
+    font-size: 22px;
+}
