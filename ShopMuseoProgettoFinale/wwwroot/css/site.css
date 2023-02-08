@@ -34,15 +34,3 @@ body {
     opacity: 0.5;
     transform: scale(1.02);
 }
-
-ul > li:nth-child(1) {
-    font-weight:bold;
-}
-ul > li:hover {
-    background-color: rgba(238, 238, 59, 0.691);
-    border-radius: 30px;
-}
-
-ul>li:active {
-    transform:scale(1.2, 1.1);
-}
