@@ -1,11 +1,15 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
     Layout = "_Layout";
+    string UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
 }
 
 @section links {
     <link rel="stylesheet" href="~/css/Index.css" />
 }
 
+
+<div id="userId" userId="@UserId" class="invisible"></div>
 
 <div class="header-main-bar">
     <div class="logo-search-container">
@@ -137,7 +141,7 @@
         $(function () {
             loadList();
 
-            document.getElementById("search").addEventListener("keyup", searchProducts);
+            $('#search').on("keyup", searchProducts);
 
             function searchProducts() {
                 let stringaDiRicerca = document.getElementById("search").value;
@@ -156,7 +160,6 @@
                     if (res.data.length == 0) {
                         document.querySelector("#noProductsDiv").classList.remove("d-none");
                         document.querySelector("#productsDiv").classList.add("d-none");
-                        debugger;
                     } else {
                         document.querySelector("#productsDiv").classList.remove("d-none");
                         document.querySelector("#noProductsDiv").classList.add("d-none");
@@ -169,31 +172,74 @@
                                 currency: 'EUR'
                             });
 
+                            let liked = false;
+                            product.likes.forEach(like => {
+                                if (like.userId == $('#userId').attr('userId')) {
+                                    liked = true;
+                                }
+                            });
 
-                            $("#productsDiv").append(
-                            `<div class="col-md-4 p-3">
-                                                                                        <a href='/User/Buy/${product.id}' class="url-box text-decoration-none" style="color:white">
-                                                                                    <figure class='newsCard news-Slide-up '>
-                                                                                        <img class="object-fit-cover" src="${product.pictureUrl}" />
-                                                                                        <div class='newsCaption px-4'>
-                                                                                            <div class="d-flex align-items-center justify-content-between cnt-title">
-                                                                                                <h5 class='newsCaption-title text-white m-0'>${product.name}</h5>
-                                                                                                <i class="fas fa-arrow-alt-circle-right "></i>
-                                                                                            </div>
-                                                                                            <div class='newsCaption-content d-flex'>
-                                                                                                <p class="col-10 py-3 px-0"> ${formatter.format(product.price)} </br></br>
-                                                                                    </a>                              <button class="likeButton" style="border:none; background-color:transparent;"><i class="fas fa-heart"></i></button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <span class="overlay"></span>
 
-                                                                                    </figure>
-
-                                                                            </div>`);
+                            $("#productsDiv").append(`
+            <div class="col-md-4 p-3">
+                <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
+                </a>
+                <figure class="newsCard news-Slide-up ">
+                    <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
+                        <img class="object-fit-cover" src="${product.pictureUrl}">
+                    </a>
+                    <div class="newsCaption px-4">
+                        <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
+                            <div class="d-flex align-items-center justify-content-between cnt-title">
+                                <h5 class="newsCaption-title text-white m-0">${product.name}</h5>
+                                <i class="fas fa-arrow-alt-circle-right " aria-hidden="true"></i>
+                            </div>
+                        </a>
+                        <div class="newsCaption-content d-flex">
+                            <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
+                            </a>
+                            <p class="col-10 py-3 px-0">
+                                <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
+                                    ${formatter.format(product.price)} <br><br>
+                                </a>
+                                <button class="likeButton border-0 bg-transparent ${liked ? "text-danger" : ""}" productid=${product.id}>
+                                    <i class="fas fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                    <span class="overlay"></span>
+                </figure>
+            </div>
+                                            `);
                         });
                     }
 
                     document.querySelector("#spinner-loader").classList.add("d-none");
+
+                    $('[productid]').on('click', function () {
+                        let button = $(this);
+                        let liked = button.hasClass('text-danger');
+                        let productId = button.attr('productid');
+                        debugger;
+                        if (liked) {
+                            axios.delete(`https://localhost:7128/api/removelike/${productId}`)
+                                .then(function (res) {
+                                    button.removeClass('text-danger');
+                                })
+                                .catch(function (err) {
+                                    console.log(err);
+                                });
+                        } else {
+                            axios.put(`https://localhost:7128/api/addlike/${productId}`)
+                                .then(function (res) {
+                                    button.addClass('text-danger');
+                                })
+                                .catch(function (err) {
+                                    console.log(err);
+                                });
+                        }
+                    });
 
                 }).catch((error) => {
                     console.log(error);

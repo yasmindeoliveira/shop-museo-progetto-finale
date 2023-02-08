@@ -21,7 +21,11 @@ namespace ShopMuseoProgettoFinale.Controllers {
                 products = products.Where(p => p.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            return !products.Any() ? NotFound("Non sono stati trovati prodotti con quella stringa di ricerca.") : Ok(products);
+            if (!products.Any()) {
+                return NotFound("Non sono stati trovati prodotti con quella stringa di ricerca.");
+            }
+
+            return Ok(products);
         }
         #endregion
 
@@ -36,8 +40,15 @@ namespace ShopMuseoProgettoFinale.Controllers {
 
             using ApplicationDbContext db = new();
             Product? articolo = db.Products.Find(id);
+            db.Entry(articolo)
+              .Collection(p => p.Likes)
+              .Load();
 
-            return articolo is null ? NotFound("L'articolo non è stato trovato con questo id") : Ok(articolo);
+            if (articolo is null) {
+                return NotFound("L'articolo non è stato trovato con questo id");
+            }
+
+            return Ok(articolo);
         }
         #endregion
 
