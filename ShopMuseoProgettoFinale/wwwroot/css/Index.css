@@ -566,20 +566,9 @@ body {
         }
     /*----------------Search Bar-----------------*/
 
-    #search {
-        flex: 2;
-        display: flex;
-        justify-content: end;
-        padding-right: 5%;
-        align-items: center;
-    }
+    #searchBox {
 
-    form > input {
-        min-width: 165px;
-        width: 20vw;
-        max-width: 300px;
     }
-
 }
 
 

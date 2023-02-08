@@ -6,17 +6,6 @@
     <link rel="stylesheet" href="~/css/Index.css" />
 }
 
-@section SearchBar {
-    @*  searchInput  *@
-    <div class="box">
-        <form name="search">
-            <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
-        </form>
-        <i class="fas fa-search"></i>
-
-    </div>
-}
-
 
 <div class="header-main-bar">
     <div class="logo-search-container">
@@ -128,7 +117,13 @@
 
         </div>
     </div>
-
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-6">
+            <form class="d-flex" role="search">
+                <input id="searchBox" type="search" class="form-control me-2" placeholder="Cerca un prodotto" aria-label="Cerca" />
+            </form>
+        </div>
+    </div>
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-lg-9 col-md-10 d-flex justify-content-center">
             <div id="productsDiv" class="row"></div>
@@ -139,73 +134,74 @@
 
 @section Scripts {
     <script type="text/javascript">
+        $(function () {
+            loadList();
 
-        loadList();
+            document.getElementById("search").addEventListener("keyup", searchProducts);
 
-        document.getElementById("search").addEventListener("keyup", searchProducts);
+            function searchProducts() {
+                let stringaDiRicerca = document.getElementById("search").value;
 
-        function searchProducts() {
-            let stringaDiRicerca = document.getElementById("search").value;
+                console.log(stringaDiRicerca);
+                loadList(stringaDiRicerca);
+            }
 
-            console.log(stringaDiRicerca);
-            loadList(stringaDiRicerca);
-        }
+            function loadList(searchString) {
 
-        function loadList(searchString) {
+                axios.get("/api/products", {
+                    params: {
+                        search: searchString
+                    }
+                }).then((res) => {
+                    if (res.data.length == 0) {
+                        document.querySelector("#noProductsDiv").classList.remove("d-none");
+                        document.querySelector("#productsDiv").classList.add("d-none");
+                        debugger;
+                    } else {
+                        document.querySelector("#productsDiv").classList.remove("d-none");
+                        document.querySelector("#noProductsDiv").classList.add("d-none");
 
-            axios.get("/api/products", {
-                params: {
-                    search: searchString
-                }
-            }).then((res) => {
-                if (res.data.length == 0) {
-                    document.querySelector("#noProductsDiv").classList.remove("d-none");
-                    document.querySelector("#productsDiv").classList.add("d-none");
-                    debugger;
-                } else {
-                    document.querySelector("#productsDiv").classList.remove("d-none");
-                    document.querySelector("#noProductsDiv").classList.add("d-none");
+                        document.querySelector("#productsDiv").innerHTML = "";
 
-                    document.querySelector("#productsDiv").innerHTML = "";
+                        res.data.forEach(product => {
+                            formatter = Intl.NumberFormat('it-IT', {
+                                style: 'currency',
+                                currency: 'EUR'
+                            });
 
-                    res.data.forEach(product => {
-                        formatter = Intl.NumberFormat('it-IT', {
-                            style: 'currency',
-                            currency: 'EUR'
+
+                            $("#productsDiv").append(
+                                `<div class="col-lg-4 p-3">
+                                                                                            <a href='/User/Buy/${product.id}' class="url-box text-decoration-none" style="color:white">
+                                                                                        <figure class='newsCard news-Slide-up '>
+                                                                                            <img class="object-fit-cover" src="${product.pictureUrl}" />
+                                                                                            <div class='newsCaption px-4'>
+                                                                                                <div class="d-flex align-items-center justify-content-between cnt-title">
+                                                                                                    <h5 class='newsCaption-title text-white m-0'>${product.name}</h5>
+                                                                                                    <i class="fas fa-arrow-alt-circle-right "></i>
+                                                                                                </div>
+                                                                                                <div class='newsCaption-content d-flex'>
+                                                                                                    <p class="col-10 py-3 px-0"> ${formatter.format(product.price)} </br></br>
+                                                                                      </a>                              <button class="likeButton" style="border:none; background-color:transparent;"><i class="fas fa-heart"></i></button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <span class="overlay"></span>
+
+                                                                                        </figure>
+
+                                                                                </div>`);
                         });
+                    }
 
+                    document.querySelector("#spinner-loader").classList.add("d-none");
 
-                        $("#productsDiv").append(
-                            `<div class="col-lg-4 p-3">
-                                                    <a href='/User/Buy/${product.id}' class="url-box text-decoration-none" style="color:white">
-                                                <figure class='newsCard news-Slide-up '>
-                                                    <img class="object-fit-cover" src="${product.pictureUrl}" />
-                                                    <div class='newsCaption px-4'>
-                                                        <div class="d-flex align-items-center justify-content-between cnt-title">
-                                                            <h5 class='newsCaption-title text-white m-0'>${product.name}</h5>
-                                                            <i class="fas fa-arrow-alt-circle-right "></i>
-                                                        </div>
-                                                        <div class='newsCaption-content d-flex'>
-                                                            <p class="col-10 py-3 px-0"> ${formatter.format(product.price)} </br></br>
-                                              </a>                              <button class="likeButton" style="border:none; background-color:transparent;"><i class="fas fa-heart"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    <span class="overlay"></span>
-
-                                                </figure>
-
-                                        </div>`);
-                    });
-                }
-
-                document.querySelector("#spinner-loader").classList.add("d-none");
-
-            }).catch((error) => {
-                console.log(error);
-                document.querySelector("#noProductsDiv").classList.remove("d-none");
-                document.querySelector("#spinner-loader").classList.add("d-none");
-                document.querySelector("#productsDiv").classList.add("d-none");
-            });
-        }
+                }).catch((error) => {
+                    console.log(error);
+                    document.querySelector("#noProductsDiv").classList.remove("d-none");
+                    document.querySelector("#spinner-loader").classList.add("d-none");
+                    document.querySelector("#productsDiv").classList.add("d-none");
+                });
+            }
+        });
     </script>
 }
