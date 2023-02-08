@@ -10,7 +10,102 @@ body {
     background-attachment: fixed;
 }
 
-@media (max-width:400px){
+
+@media (max-width:400px) {
+
+    /*----------------------------------------Card START---------------------------------------------------------*/
+
+    .newsCard {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        background-color: #fff;
+        color: #fff;
+        overflow: hidden;
+        border-radius: 6px;
+    }
+
+    figure img {
+        display: block;
+        object-fit: cover !important;
+        object-position: center center !important;
+        height: 100%;
+        width: 100%;
+    }
+
+    .overlay {
+        background: rgb(40,26,54);
+        background: -moz-linear-gradient(0deg, rgba(40,26,54,1) 0%, rgba(89,59,116,0) 100%);
+        background: -webkit-linear-gradient(0deg, rgba(40,26,54,1) 0%, rgba(89,59,116,0) 100%);
+        background: linear-gradient(0deg, rgba(40,26,54,1) 0%, rgba(89,59,116,0) 100%);
+        display: block;
+        position: absolute;
+        height: 200px;
+        width: 100%;
+        bottom: 0;
+        z-index: 3;
+    }
+
+    .newsCaption {
+        position: absolute;
+        top: auto;
+        bottom: 31px;
+        left: 0;
+        width: 100%;
+        height: 35%;
+        z-index: 10;
+        padding: 15px;
+        -webkit-transform: translateY(80%);
+        transform: translateY(80%);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: -webkit-transform 0.4s;
+        transition: -webkit-transform 0.4s;
+        transition: transform 0.4s;
+        transition: transform 0.4s, -webkit-transform 0.4s;
+    }
+
+        .newsCaption i {
+            font-size: 24px;
+        }
+
+    .newsCaption-title {
+        margin-top: 0px;
+    }
+
+    .newsCaption-content {
+        margin: 0;
+    }
+
+    .newsCaption-link {
+        color: #fff;
+        text-decoration: underline;
+        opacity: .8;
+        -webkit-transition-property: opacity;
+        transition-property: opacity;
+        -webkit-transition-duration: 0.15s;
+        transition-duration: 0.15s;
+        -webkit-transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+        transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+    }
+
+    .news-Slide-up .overlay {
+        background: rgb(64,10,111);
+        background: -moz-linear-gradient(0deg, rgba(64,10,111,1) 0%, rgba(89,59,116,0) 100%);
+        background: -webkit-linear-gradient(0deg, rgba(64,10,111,1) 0%, rgba(89,59,116,0) 100%);
+        background: linear-gradient(0deg, rgba(64,10,111,1) 0%, rgba(89,59,116,0) 100%);
+    }
+
+    .news-Slide-up .newsCaption {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        -webkit-transition: -webkit-transform 0.4s;
+        transition: -webkit-transform 0.4s;
+        transition: transform 0.4s;
+        transition: transform 0.4s -webkit-transform 0.4s;
+    }
+    /*-----------------------------------------Card END-------------------------------------- */
+
     .box {
         position: relative;
         padding-top: 1vh;
@@ -76,7 +171,7 @@ body {
     /*----------------------------------*/
 
     .Title {
-        position:relative;
+        position: relative;
         width: 100vw;
         height: 3vh;
         min-height: 80px;
@@ -84,7 +179,7 @@ body {
 
         .Title > span {
             position: absolute;
-            left:50%;
+            left: 50%;
             top: 36%;
             transform: translate(-50%, -50%);
             display: block;
@@ -94,7 +189,7 @@ body {
             cursor: pointer;
         }
 
-        .Title > span::before {
+            .Title > span::before {
                 content: "MuseumShop";
                 position: absolute;
                 color: transparent;
@@ -106,7 +201,7 @@ body {
                 transition: 1s;
             }
 
-        .Title > span::after {
+            .Title > span::after {
                 content: "MuseumShop";
                 position: absolute;
                 color: transparent;
@@ -510,6 +605,9 @@ body {
     h3 {
         text-align: center;
     }
+
+    /* ------------------------ */
+
 }
 
 /*-------------------------------------------------*/
@@ -612,7 +710,7 @@ figure img {
     bottom: 31px;
     left: 0;
     width: 100%;
-    height: 35%;
+    height: 39%;
     z-index: 10;
     padding: 15px;
     -webkit-transform: translateY(80%);
