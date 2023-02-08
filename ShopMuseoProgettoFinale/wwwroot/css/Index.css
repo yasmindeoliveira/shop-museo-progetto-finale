@@ -10,7 +10,234 @@ body {
     background-attachment: fixed;
 }
 
-@media (max-width: 700px) {
+@media (max-width:400px){
+    .box {
+        position: relative;
+        padding-top: 1vh;
+        padding-right: 2vw;
+    }
+
+    .input {
+        padding: 8px;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        box-sizing: border-box;
+        font-family: Comic Sans MS;
+        font-size: 26px;
+        color: #ffd52d;
+        outline: none;
+        transition: .5s;
+    }
+
+    .box:hover input {
+        width: 200px;
+        background: rgba(238, 238, 59, 0.591);
+        border-color: rebeccapurple;
+        border: solid 2px white;
+        box-shadow: yellow 0px 0px 2px, purple 0px 0px 2px;
+        border-radius: 10px;
+    }
+
+    .box i {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translate(-50%,-50%);
+        font-size: 26px;
+        color: #ffd52d;
+        transition: .2s;
+    }
+
+    .box:hover i {
+        opacity: 0;
+        z-index: -1;
+    }
+
+    /*--------------------------------------------*/
+
+    /*-----------------slides-----------------*/
+    .slide-pictures-container {
+        width: 100%;
+        margin-top: 1vh;
+        padding: 1vh;
+    }
+
+    .photoAfterSlide {
+        visibility: hidden;
+        height: 0px;
+    }
+
+    .photoUnderSlide {
+        visibility: hidden;
+        height: 0px;
+    }
+    /*----------------------------------*/
+
+    .Title {
+        position:relative;
+        width: 100vw;
+        height: 3vh;
+        min-height: 80px;
+    }
+
+        .Title > span {
+            position: absolute;
+            left:50%;
+            top: 36%;
+            transform: translate(-50%, -50%);
+            display: block;
+            color: #C796F7;
+            font-size: 46px;
+            letter-spacing: 4px;
+            cursor: pointer;
+        }
+
+        .Title > span::before {
+                content: "MuseumShop";
+                position: absolute;
+                color: transparent;
+                background-image: repeating-linear-gradient( 45deg, transparent 0, transparent 2px, yellow 2px, white 4px );
+                -webkit-background-clip: text;
+                top: 0px;
+                left: 0;
+                z-index: -1;
+                transition: 1s;
+            }
+
+        .Title > span::after {
+                content: "MuseumShop";
+                position: absolute;
+                color: transparent;
+                background-image: repeating-linear-gradient( 135deg, transparent 0, transparent 2px, white 2px, yellow 4px );
+                -webkit-background-clip: text;
+                top: 0px;
+                left: 0px;
+                transition: 1s;
+            }
+}
+
+@media (min-width:400px){
+    .box {
+        position: relative;
+        padding-top: 5px;
+        padding-right: 2vw;
+    }
+
+    .input {
+        padding: 8px;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        box-sizing: border-box;
+        font-family: Comic Sans MS;
+        font-size: 26px;
+        color: #ffd52d;
+        outline: none;
+        transition: .5s;
+    }
+
+    .box:hover input {
+        width: 200px;
+        background: rgba(238, 238, 59, 0.591);
+        border-color: rebeccapurple;
+        border: solid 2px white;
+        box-shadow: yellow 0px 0px 2px, purple 0px 0px 2px;
+        border-radius: 10px;
+    }
+
+    .box i {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translate(-50%,-50%);
+        font-size: 26px;
+        color: #ffd52d;
+        transition: .2s;
+    }
+
+    .box:hover i {
+        opacity: 0;
+        z-index: -1;
+    }
+
+    /*--------------------------------------------*/
+
+    /*-----------------slides-----------------*/
+    .slide-pictures-container {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .photoAfterSlide {
+        visibility: hidden;
+        height: 0px;
+    }
+
+    .photoUnderSlide {
+        visibility: hidden;
+        height: 0px;
+    }
+    /*----------------------------------*/
+
+    .Title {
+        position:relative;
+        width: 100vw;
+        height: 8vh;
+        min-height: 80px;
+    }
+
+        .Title > span {
+            position: absolute;
+            left: 50%;
+            top: 46%;
+            transform: translate(-50%, -50%);
+            display: block;
+            color: #C796F7;
+            font-size: 56px;
+            letter-spacing: 4px;
+            cursor: pointer;
+        }
+
+            .Title > span::before {
+                content: "MuseumShop";
+                position: absolute;
+                color: transparent;
+                background-image: repeating-linear-gradient( 45deg, transparent 0, transparent 2px, yellow 2px, white 4px );
+                -webkit-background-clip: text;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: 1s;
+            }
+
+            .Title > span::after {
+                content: "MuseumShop";
+                position: absolute;
+                color: transparent;
+                background-image: repeating-linear-gradient( 135deg, transparent 0, transparent 2px, white 2px, yellow 4px );
+                -webkit-background-clip: text;
+                top: 0px;
+                left: 0px;
+                transition: 1s;
+            }
+
+            .Title > span:hover:before {
+                top: 10px;
+                left: 10px;
+            }
+
+            .Title > span:hover:after {
+                top: -10px;
+                left: -10px;
+            } 
+}
+
+
+@media (min-width: 700px) {
     .box {
         position: relative;
         padding-top:5px;
