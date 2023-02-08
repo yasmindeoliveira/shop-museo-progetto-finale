@@ -114,23 +114,23 @@
 </div>
 
 
-<div class="container-fluid">
+<div class="container-fluid d-flex flex-column align-items-center">
     <div id="spinner-loader" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
             <span style="width:100px;" class="sr-only"></span>
 
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center w-100">
         <div class="col-12 col-md-6">
             <form class="d-flex" role="search">
                 <input id="searchBox" type="search" class="form-control me-2" placeholder="Cerca un prodotto" aria-label="Cerca" />
             </form>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center w-100">
         <div class="col-12 col-lg-9 col-md-10 d-flex justify-content-center">
-            <div id="productsDiv" class="row"></div>
+            <div id="productsDiv" class="row w-100"></div>
             <div id="noProductsDiv" class="d-none text-center"> No Products To Show </div>
         </div>
     </div>
@@ -141,10 +141,10 @@
         $(function () {
             loadList();
 
-            $('#search').on("keyup", searchProducts);
+            $('#searchBox').on("keyup", searchProducts);
 
             function searchProducts() {
-                let stringaDiRicerca = document.getElementById("search").value;
+                let stringaDiRicerca = $("#searchBox").val();
 
                 console.log(stringaDiRicerca);
                 loadList(stringaDiRicerca);
@@ -181,7 +181,7 @@
 
 
                             $("#productsDiv").append(`
-            <div class="col-md-4 p-3">
+            <div class="col-md-4 col-12 p-3 m-0">
                 <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
                 </a>
                 <figure class="newsCard news-Slide-up ">
@@ -198,14 +198,14 @@
                         <div class="newsCaption-content d-flex">
                             <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
                             </a>
-                            <p class="col-10 py-3 px-0">
+                            <div class="col-10 py-3 px-1 text-start">
                                 <a href="/User/Buy/${product.id}" class="url-box text-decoration-none text-white">
                                     ${formatter.format(product.price)} <br><br>
                                 </a>
                                 <button class="likeButton border-0 bg-transparent ${liked ? "text-danger" : ""}" productid=${product.id}>
                                     <i class="fas fa-heart" aria-hidden="true"></i>
                                 </button>
-                            </p>
+                            </div>
                         </div>
                     </div>
                     <span class="overlay"></span>
