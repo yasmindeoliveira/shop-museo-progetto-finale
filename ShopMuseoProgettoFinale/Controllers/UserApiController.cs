@@ -124,7 +124,7 @@ namespace ShopMuseoProgettoFinale.Controllers {
             if (!userLikedProduct) {
                 product.Likes.Add(new() {
                     UserId = userId,
-                    ApplicationUser = (ApplicationUser) db.Users.Find(userId),
+                    ApplicationUser = db.Users.Find(userId),
                     Product = product,
                     ProductId = id
                 });

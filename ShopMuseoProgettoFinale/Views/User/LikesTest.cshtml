@@ -1,30 +1,48 @@
 ﻿
-
+@* Pulsanti per fare testing, lavorano sempre sul prodotto con ID 1*@
 <button onclick="addLike()" class="btn btn-outline-success">Add</button>
 <button onclick="removeLike()" class="btn btn-outline-danger">Remove</button>
 
+@* Il pulsante richiama una funzione che aggiorna il suo stesso contenuto *@
+<button id="product1" class="btn btn-outline-info" onclick="updatelikescount()">Likes: ?</button>
+
 @section Scripts {
     <script type="text/javascript">
+        @* Bisogna usare axios.put per aggiungere un like, il link ha solo bisogno dell'ID. La funzione darà un errore se l'utente non ha fatto il login. *@
         function addLike() {
-            axios({
-                url: 'https://localhost:7128/api/addlike/1',
-                method: 'put'
-            }).then(function (res) {
-                console.log(res);
-            }).catch(function (err) {
-                console.log(err);
-            });
+            axios.put('https://localhost:7128/api/addlike/1')
+                .then(function (res) {
+                    console.log(res);
+
+                    @* La funzione per aggiornare il conto di likes viene richiamata per rendere la conta dinamica *@
+                    updatelikescount();
+                }).catch(function (err) {
+                    console.log(err);
+                });
         }
 
+        @* Stessa cosa di prima *@
         function removeLike() {
-            axios({
-                url: 'https://localhost:7128/api/removelike/1',
-                method: 'delete'
-            }).then(function (res) {
-                console.log(res);
-            }).catch(function (err) {
-                console.log(err);
-            });
+            axios.delete('https://localhost:7128/api/removelike/1')
+                .then(function (res) {
+                    console.log(res);
+
+                    @* La funzione per aggiornare il conto di likes viene richiamata per rendere la conta dinamica *@
+                    updatelikescount();
+                }).catch(function (err) {
+                    console.log(err);
+                });
+        }
+
+        @* Per prendere quanti likes ha un prodotto, ci basta fare "res.data.length", in quanto sarà un array di utenti che hanno messo like al prodotto *@
+        function updatelikescount() {
+            axios.get('https://localhost:7128/api/likes/1')
+                .then(function (res) {
+                    $('#product1').html(`Likes: ${res.data.length}`);
+                })
+                .catch(function(err) {
+                    console.log(`Error: ${err}`)
+                });
         }
     </script>
 }

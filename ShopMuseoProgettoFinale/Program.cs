@@ -1,12 +1,13 @@
 global using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using ShopMuseoProgettoFinale.Database;
+using ShopMuseoProgettoFinale.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
