@@ -1,38 +1,51 @@
 ﻿body {
-    background-image: url("https://cdn.britannica.com/33/130833-050-462F8F09/Wheatfield-Crows-oil-canvas-Vincent-van-Gogh-1890.jpg");
+    background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("https://cdn.britannica.com/33/130833-050-462F8F09/Wheatfield-Crows-oil-canvas-Vincent-van-Gogh-1890.jpg");
 }
+
 html {
     color: #F9F6EE;
-    
 }
 
 * {
     color: #F9F6EE;
-    
 }
 
 header > nav {
     font-weight: bold;
-    text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+/*    text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;*/
 }
 
 .loginDiv {
-    text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+/*    text-shadow: 2px 2px 3px rgba(255,255,255,0.5);*/
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
 }
 
 a {
-    color:black;
-    font-weight:bold;   
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
 }
 
+a.navbar-brand,
+a.nav-link {
+    color:white;
+    text-shadow: none;
+}
 
 input {
-    margin-bottom:1vh;
+    margin-bottom: 1vh;
 }
 
 form > button {
     background-color: #5072A7;
+}
+
+label[for=Input_RememberMe] {
+    color: #fff;
+}
+
+p {
+    margin: 0;
 }
