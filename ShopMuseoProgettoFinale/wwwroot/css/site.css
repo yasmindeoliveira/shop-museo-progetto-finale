@@ -16,6 +16,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    background-color: #F3EBF7;
 }
 
 .card-img-top {
@@ -81,3 +82,5 @@ p {
     color: #fff;
     font-size: 22px;
 }
+
+
