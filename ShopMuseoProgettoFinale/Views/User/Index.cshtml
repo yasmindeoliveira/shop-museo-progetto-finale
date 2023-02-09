@@ -228,7 +228,7 @@
                                     button.removeClass('text-danger');
                                 })
                                 .catch(function (err) {
-                                    console.log(err);
+                                    window.location.href = "https://localhost:7128/Identity/Account/Register"
                                 });
                         } else {
                             axios.put(`https://localhost:7128/api/addlike/${productId}`)
@@ -236,7 +236,7 @@
                                     button.addClass('text-danger');
                                 })
                                 .catch(function (err) {
-                                    console.log(err);
+                                    window.location.href = "https://localhost:7128/Identity/Account/Register"
                                 });
                         }
                     });
